@@ -1,0 +1,26 @@
+.burgundy {
+  color: #fe7f9c;
+  font-size: 28px;
+}
+
+.fa-minus {
+  font-size: 20px;
+  width: 50%;
+}
+h6 {
+  margin-bottom: 0px;
+}
+.form-group {
+  margin-bottom: 5px;
+}
+
+label {
+  padding-left: 10px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+#rose {
+  color: #fe7f9c;
+}

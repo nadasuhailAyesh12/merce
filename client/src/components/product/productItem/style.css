@@ -1,0 +1,21 @@
+.btn{
+    border: 1px solid #fc4c4e;
+    border-radius: 20px;
+    background-color: #fff;
+
+    
+}
+.btn:hover{
+    color: #fff;
+    background-color: #fc4c4e;
+}
+.card-body{
+    padding: 10px;
+   
+}
+.card{
+       cursor: pointer;
+}
+select,.btn{
+    color: #fc4c4e;
+}
