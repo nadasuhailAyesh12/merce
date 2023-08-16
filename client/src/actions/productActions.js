@@ -1,3 +1,5 @@
+import getProducts from "../api/product";
+
 export const setFilterOption = (category) => {
     return {
         type: "SET_FILTER_OPTION",
@@ -21,17 +23,25 @@ export const setSortingOption = (sorter) => {
 
 export const setCurrentPage = (page) => {
     return {
-        type: 'SET_CURRENT_PAGE',
+        type: "SET_CURRENT_PAGE",
         payload: page,
     };
 };
 
-export const updateFilteredProducts = () => {
-    return {
-        type: "UPDATE_FILTERED_PRODUCTS",
-    };
-};
+export const updateFilteredProducts =
+    (searchQuery, selectedFilter, selectedSortingOption, currentPage) =>
+        async (dispatch) => {
+            dispatch({ type: "API_REQUEST" });
 
-
-
-
+            try {
+                const response = await getProducts(
+                    searchQuery,
+                    selectedFilter,
+                    selectedSortingOption,
+                    currentPage
+                );
+                dispatch({ type: "SUCCESS", payload: response.data.products });
+            } catch (error) {
+                dispatch({ type: "FAILURE", payload: error });
+            }
+        };

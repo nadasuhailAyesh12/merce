@@ -8,9 +8,8 @@ import {
 } from "../../../actions/productActions";
 
 const Sort = () => {
-  const selectedSortOption = useSelector(
-    (state) => state.products.selectedSortOption
-  );
+  const { searchQuery, selectedFilter, selectedSortingOption, currentPage } =
+    useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   return (
@@ -23,13 +22,16 @@ const Sort = () => {
             id="sort"
             onChange={(e) => {
               dispatch(setSortingOption(e.target.value));
-              dispatch(updateFilteredProducts());
+              dispatch(
+                updateFilteredProducts(
+                  searchQuery,
+                  selectedFilter,
+                  e.target.value,
+                  currentPage
+                )
+              );
             }}
-            value={selectedSortOption}
-            onFocus={(e) => {
-              dispatch(setSortingOption(e.target.value));
-              dispatch(updateFilteredProducts());
-            }}
+            value={selectedSortingOption}
           >
             <option value="price">Price</option>
             <option value="rating">Rating</option>

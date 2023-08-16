@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 
-dotenv.config({ path: 'backend/.env' });
+dotenv.config({});
 
 const { DEVELOPMENT_DATABASE_URL, TEST_DATABASE_URL, PRODUCTION_DATABASE_URL, PORT, NODE_ENV, CLOUDINARY_CLOUD_NAME,
     CLOUDINARY_API_KEY,

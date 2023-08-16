@@ -9,7 +9,8 @@ import {
 } from "../../../actions/productActions";
 
 const Search = () => {
-  const serachInput = useSelector((state) => state.products.searchQuery);
+  const { searchQuery, selectedFilter, selectedSortingOption, currentPage } =
+    useSelector((state) => state.products);
   const dispatch = useDispatch();
   const searchInputRef = useRef(null);
   //clear search when clicking outside
@@ -20,7 +21,14 @@ const Search = () => {
         !searchInputRef.current.contains(event.target)
       ) {
         dispatch(setSearchQuery(""));
-        dispatch(updateFilteredProducts());
+        dispatch(
+          updateFilteredProducts(
+            searchQuery,
+            selectedFilter,
+            selectedSortingOption,
+            currentPage
+          )
+        );
       }
     };
 
@@ -29,7 +37,7 @@ const Search = () => {
     return () => {
       document.removeEventListener("click", handleDocumentClick);
     };
-  }, []);
+  }, [searchQuery, selectedFilter, selectedSortingOption, currentPage]);
 
   return (
     <li
@@ -41,18 +49,20 @@ const Search = () => {
         id="search"
         className="bg-light"
         placeholder="Search product"
-        value={serachInput}
+        value={searchQuery}
         onChange={(e) => {
           dispatch(setSearchQuery(e.target.value));
-          dispatch(updateFilteredProducts());
+          dispatch(
+            updateFilteredProducts(
+              e.target.value,
+              selectedFilter,
+              selectedSortingOption,
+              currentPage
+            )
+          );
         }}
       />
-      <span
-        className="fa fa-search text-muted"
-        onClick={() => {
-          dispatch(updateFilteredProducts());
-        }}
-      />
+      <span className="fa fa-search text-muted" />
     </li>
   );
 };

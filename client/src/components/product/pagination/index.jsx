@@ -7,16 +7,17 @@ import {
 } from "../../../actions/productActions";
 
 const Pagination = () => {
-  const currentPage = useSelector((state) => state.products.currentPage);
-  const filteredProducts = useSelector(
-    (state) => state.products.filteredProducts
-  );
-  const selectedFilter = useSelector((state) => state.products.selectedFilter);
-  const searchQuery = useSelector((state) => state.products.searchQuery);
+  const {
+    filteredProducts,
+    searchQuery,
+    selectedFilter,
+    selectedSortingOption,
+    currentPage,
+  } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   const totalPages =
-    selectedFilter === "all" && !searchQuery
+    !selectedFilter && !searchQuery
       ? 6
       : Math.ceil(filteredProducts.length / 7);
   const pageNumbers = Array.from(
@@ -27,19 +28,40 @@ const Pagination = () => {
   const handlePreviousPage = (e) => {
     e.preventDefault();
     dispatch(setCurrentPage(Math.max(currentPage - 1), 1));
-    dispatch(updateFilteredProducts());
+    dispatch(
+      updateFilteredProducts(
+        searchQuery,
+        selectedFilter,
+        selectedSortingOption,
+        Number(e.target.textContent)
+      )
+    );
   };
 
   const handleNextPage = (e) => {
     e.preventDefault();
     dispatch(setCurrentPage(Math.min(currentPage + 1, totalPages)));
-    dispatch(updateFilteredProducts());
+    dispatch(
+      updateFilteredProducts(
+        searchQuery,
+        selectedFilter,
+        selectedSortingOption,
+        Number(e.target.textContent)
+      )
+    );
   };
 
   const handleClickedPage = (e, pageNumber) => {
     e.preventDefault();
     dispatch(setCurrentPage(pageNumber));
-    dispatch(updateFilteredProducts());
+    dispatch(
+      updateFilteredProducts(
+        searchQuery,
+        selectedFilter,
+        selectedSortingOption,
+        pageNumber
+      )
+    );
   };
 
   return (

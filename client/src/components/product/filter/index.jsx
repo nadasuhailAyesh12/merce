@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import "./style.css";
 import {
   setCurrentPage,
@@ -10,12 +9,20 @@ import {
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const selectedFilter = useSelector((state) => state.products.selectedFilter);
+  const { currentpage, selectedSortingOption, searchQuery, selectedFilter } =
+    useSelector((state) => state.products);
 
   const handleOptionChange = (event) => {
-    dispatch(setFilterOption(event.target.value));
     dispatch(setCurrentPage(1));
-    dispatch(updateFilteredProducts());
+    dispatch(setFilterOption(event.target.value));
+    dispatch(
+      updateFilteredProducts(
+        searchQuery,
+        event.target.value,
+        selectedSortingOption,
+        currentpage
+      )
+    );
   };
 
   return (
@@ -26,15 +33,11 @@ const Filter = () => {
       <div className="py-1 border-bottom ml-3">
         <input
           type="radio"
-          value="all"
+          value=""
           id="all"
           name="options"
           className="m-2"
-          checked={selectedFilter == "all"}
-          onClick={() => {
-            dispatch(setFilterOption("all"));
-            dispatch(updateFilteredProducts());
-          }}
+          checked={selectedFilter == ""}
           onChange={handleOptionChange}
         />
         <span className="font-weight-bold products">All products</span>

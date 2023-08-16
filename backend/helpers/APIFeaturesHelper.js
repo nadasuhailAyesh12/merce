@@ -19,26 +19,28 @@ class APIFeatures {
     }
 
     filter() {
-        const queryCopy = { ...this.queryString };
-        const filedsToRemove = ["keyword", "limit", "page", "sorter"];
-        filedsToRemove.map((element) => delete queryCopy[element]);
-        let filterQueryString = JSON.stringify(queryCopy);
-        this.query = this.query.find(JSON.parse(filterQueryString));
+        if (this.queryString.category) {
+            this.query = this.query.find({
+                category: this.queryString.category,
+            });
+        }
         return this;
     }
 
-    pagination() {
-        const resultsPerPage = this.queryString.limit || 4;
-        const currentPage = this.queryString.page || 1;
-        const skip = resultsPerPage * (currentPage - 1);
-        this.query = this.query.limit(resultsPerPage).skip(skip);
-        return this;
-    }
     sort() {
         this.query =
             this.queryString.sorter == "price"
                 ? this.query.sort({ price: 1 })
-                : this.query.sort({ ratings: -1 });
+                : this.queryString.sorter == "ratings"
+                    ? this.query.sort({ ratings: -1 })
+                    : this.query;
+        return this;
+    }
+    pagination() {
+        const resultsPerPage = 3;
+        const currentPage = this.queryString.page || 1;
+        const skip = resultsPerPage * (currentPage - 1);
+        this.query = this.query.limit(resultsPerPage).skip(skip);
         return this;
     }
 }

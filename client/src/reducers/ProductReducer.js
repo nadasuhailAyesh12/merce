@@ -1,13 +1,13 @@
 import { PRODUCTS_ACTIONS_CONSTANTS } from "../constants/actionTypes";
-import products from "../data";
 
 const initialState = {
-    allProducts: products,
-    filteredProducts: products,
+    filteredProducts: [],
     searchQuery: "",
-    selectedFilter: "all",
+    selectedFilter: "",
     selectedSortingOption: "price",
     currentPage: 1,
+    loading: false,
+    error: null,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -30,54 +30,33 @@ const productReducer = (state = initialState, action) => {
                 selectedSortingOption: action.payload,
             };
 
-        case PRODUCTS_ACTIONS_CONSTANTS.SET_CURRENT_PAGE: {
+        case PRODUCTS_ACTIONS_CONSTANTS.SET_CURRENT_PAGE:
             return {
                 ...state,
                 currentPage: action.payload,
             };
-        }
-        // to ensure that search ,filter,pagination sort working sync with each other when I chose them after each other we filter the array sync
-
-        case PRODUCTS_ACTIONS_CONSTANTS.UPDATE_FILTERED_PRODUCTS:
-            const {
-                allProducts,
-                searchQuery,
-                selectedFilter,
-                selectedSortingOption,
-            } = state;
-
-            const searchedProducts =
-                searchQuery === ""
-                    ? allProducts
-                    : allProducts.filter((product) =>
-                        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-                    );
-
-            const filteredProducts =
-                selectedFilter === "all"
-                    ? searchedProducts
-                    : searchedProducts.filter(
-                        (product) =>
-                            product.category === selectedFilter ||
-                            product.accessory === selectedFilter
-                    );
-
-            const sortedProducts = [...filteredProducts].sort((a, b) => {
-                return selectedSortingOption === "price"
-                    ? a.price - b.price
-                    : b.rating - a.rating;
-            });
-
-            const validCurrentPage = Math.min(Math.max(state.currentPage, 1), 6);
-            const startIndex = (validCurrentPage - 1) * 7;
-            const endIndex = startIndex + 7;
-
+        case PRODUCTS_ACTIONS_CONSTANTS.SUCCESS:
             return {
                 ...state,
-                currentPage: validCurrentPage,
-                filteredProducts: sortedProducts.slice(startIndex, endIndex),
+                filteredProducts: action.payload,
+                loading: false,
+                error: null,
             };
 
+        case PRODUCTS_ACTIONS_CONSTANTS.FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+
+        case PRODUCTS_ACTIONS_CONSTANTS.API_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+                filteredProducts: [],
+            };
         default:
             return state;
     }

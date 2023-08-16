@@ -56,11 +56,11 @@ const productSchema = new mongoose.Schema({
     },
     seller: {
         type: 'string',
-        required: [true, 'please enter  product seller'],
+        // required: [true, 'please enter  product seller'],
     },
     stock: {
         type: Number,
-        required: [true, 'please enter  product stock'],
+        // required: [true, 'please enter  product stock'],
         default: 0,
 
     },
@@ -73,7 +73,7 @@ const productSchema = new mongoose.Schema({
         user: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
-            required: true,
+            // required: true,
         },
         name: {
             type: String,
@@ -94,7 +94,7 @@ const productSchema = new mongoose.Schema({
         ,
         comment: {
             type: String,
-            required: true,
+            // required: true,
             validate: {
                 validator: (val) => {
                     return !(new Filter().isProfane(val))
@@ -107,7 +107,7 @@ const productSchema = new mongoose.Schema({
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
-        required: true,
+        // required: true,
     },
     image:
     {
