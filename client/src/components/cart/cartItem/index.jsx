@@ -36,7 +36,7 @@ const CartItem = ({ item }) => {
     <div className="product">
       <div className="row">
         <div className="col-md-3">
-          <img className="img-fluid mx-auto d-block image" src={item.image} />
+          <img className="img-fluid mx-auto d-block image" src={item.image.url} />
         </div>
         <div className="col-md-8">
           <div className="info">
@@ -55,14 +55,15 @@ const CartItem = ({ item }) => {
                   id="quantity"
                   type="number"
                   min="1"
-                  max="5"
-                  defaultValue="1"
+                  max={item.stock}
+                  value={item.quantity}
                   className="form-control quantity-input"
                   onChange={(e) => {
-                    dispatch(updateQuantity(item.id, e.target.value));
-                  }}
+                      dispatch(updateQuantity(item._id, e.target.value));
+                    }
+                  }
                   onClick={(e) => {
-                    dispatch(updateQuantity(item.id, e.target.value));
+                    dispatch(updateQuantity(item._id, e.target.value));
                   }}
                   onKeyDown={handleKeyDown}
                 />

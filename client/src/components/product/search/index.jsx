@@ -14,30 +14,30 @@ const Search = () => {
   const dispatch = useDispatch();
   const searchInputRef = useRef(null);
   //clear search when clicking outside
-  useEffect(() => {
-    const handleDocumentClick = (event) => {
-      if (
-        searchInputRef.current &&
-        !searchInputRef.current.contains(event.target)
-      ) {
-        dispatch(setSearchQuery(""));
-        dispatch(
-          updateFilteredProducts(
-            searchQuery,
-            selectedFilter,
-            selectedSortingOption,
-            currentPage
-          )
-        );
-      }
-    };
+  // useEffect(() => {
+  //   const handleDocumentClick = (event) => {
+  //     if (
+  //       searchInputRef.current &&
+  //       !searchInputRef.current.contains(event.target)
+  //     ) {
+  //       dispatch(setSearchQuery(""));
+  //       dispatch(
+  //         updateFilteredProducts(
+  //           searchQuery,
+  //           selectedFilter,
+  //           selectedSortingOption,
+  //           currentPage
+  //         )
+  //       );
+  //     }
+  //   };
 
-    document.addEventListener("click", handleDocumentClick);
+  //   document.addEventListener("click", handleDocumentClick);
 
-    return () => {
-      document.removeEventListener("click", handleDocumentClick);
-    };
-  }, [searchQuery, selectedFilter, selectedSortingOption, currentPage]);
+  //   return () => {
+  //     document.removeEventListener("click", handleDocumentClick);
+  //   };
+  // }, [searchQuery, selectedFilter, selectedSortingOption, currentPage]);
 
   return (
     <li

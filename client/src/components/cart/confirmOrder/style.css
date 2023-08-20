@@ -1,0 +1,54 @@
+.summary {
+  border-top: 2px solid#fc4c4e;
+  background-color: #ffe0e3;
+  border-radius: 1rem;
+  padding: 20px ;
+  width: 80%;
+}
+
+.summary h3 {
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: 600;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.summary .summary-item:not(:last-of-type) {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.summary .detail {
+  font-size: 1em;
+  font-weight: 600;
+}
+.summary .price {
+  font-size: 1em;
+  float: right;
+}
+.checkout_btn:hover {
+  background-color: #fc4c4e;
+}
+.checkout_btn {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.order-confirm p {
+  margin-left: 20px;
+  font-size: 20px;
+}
+.order-confirm {
+  box-shadow: 0 0 3px black;
+  margin-left: 50px;
+  width: 60%;
+  margin-bottom: 10px;
+}
+.name {
+  text-align: center;
+}
+b {
+  font-size: 20px;
+}
+

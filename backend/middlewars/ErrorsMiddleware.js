@@ -12,7 +12,7 @@ module.exports = (err, req, res, next) => {
             sucess: false,
             error: err,
             stack: err.stack,
-            errorMessage: err.message,
+            message: err.message,
         });
     }
 

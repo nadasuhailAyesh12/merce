@@ -8,9 +8,12 @@ const CartList = () => {
 
   return (
     <>
-      {cartItems.map((item) => (
-        <CartItem item={item} key={item.id} />
-      ))}
+      {cartItems.length ?
+        
+          cartItems.map((item) => (
+            <CartItem item={item} key={item._id} />
+          ))
+        : <h1> No items at cart yet!</h1>}
     </>
   );
 };

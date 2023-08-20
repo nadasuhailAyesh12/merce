@@ -4,12 +4,22 @@ const initialState = {
     cartItems: [],
     error: "",
     totalPrice: 0,
+    shippingInfo: {
+        address: "",
+        city: "",
+        phoneNo: "",
+        postalcode: "",
+        country: "",
+    },
+    subTotal: 0,
+    tax: 0,
+    shippingCost: 0,
 };
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case Cart_ACTIONS_CONSTANTS.ADD_TO_CART: {
-            if (state.cartItems.find((item) => item.id == action.payload.id)) {
+            if (state.cartItems.find((item) => item._id == action.payload.id)) {
                 return {
                     ...state,
                     error: "product already added to cart",
@@ -27,7 +37,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cartItems: state.cartItems.filter(
-                    (item) => item.id !== action.payload.id
+                    (item) => item._id !== action.payload._id
                 ),
                 totalPrice:
                     state.totalPrice - action.payload.price * action.payload.quantity,
@@ -37,7 +47,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cartItems: state.cartItems.map((item) =>
-                    item.id === action.payload.id
+                    item._id === action.payload.id
                         ? { ...item, quantity: action.payload.quantity }
                         : item
                 ),
@@ -52,6 +62,19 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 error: null,
             };
+        case Cart_ACTIONS_CONSTANTS.UPDATE_SHIPPING_INFO:
+            return {
+                ...state,
+                shippingInfo: {
+                    ...state.shippingInfo,
+                    ...action.payload,
+                },
+            };
+        case Cart_ACTIONS_CONSTANTS.UPDATE_CART_TOTALS:
+            return {
+                ...state,
+                ...action.payload
+            }
 
         default:
             return state;

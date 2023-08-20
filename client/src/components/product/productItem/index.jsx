@@ -15,7 +15,7 @@ const ProductItem = ({ product }) => {
       className="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1"
     >
       <div className="card">
-        {/* <img className="card-img-top" src={product.image} /> */}
+        <img className="card-img-top" src={product.image.url} />
         <div className="card-body">
           <h5>
             <b>{product.name}</b>

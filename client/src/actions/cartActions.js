@@ -13,12 +13,14 @@ export const addToCart = (product) => {
 };
 
 export const updateQuantity = (id, quantity) => {
+
     return {
         type: "UPATE_QUANTITY",
         payload: {
             id,
-            quantity,
+            quantity
         },
+
     };
 };
 
@@ -27,3 +29,17 @@ export const clearError = () => {
         type: 'CLEAR_Error'
     }
 };
+
+export const updateShippingInfo = (info) => {
+    return {
+        type: 'UPDATE_SHIPPING_INFO',
+        payload: info
+    }
+};
+
+export const updateCartTotals = (totals) => {
+    return {
+        type: 'UPDATE_CART_TOTALS',
+        payload: totals
+    }
+}

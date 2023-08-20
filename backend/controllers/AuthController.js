@@ -14,6 +14,7 @@ const register = async (req, res, next) => {
         res.status(201).json({
             success: true,
             user,
+            token
         });
     }
     catch (err) {
@@ -32,6 +33,7 @@ const login = async (req, res, next) => {
         res.status(200).json({
             success: true,
             user,
+            token
         });
     }
     catch (err) {

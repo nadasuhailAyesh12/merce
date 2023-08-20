@@ -1,7 +1,7 @@
 
 const products = [
     {
-        name: "GreenDress",
+        name: "blueDress",
         price: 110,
         category: "dresses",
         rating: 1,
@@ -9,89 +9,95 @@ const products = [
         quantity: 1,
         description:
             "New look A green cotton summer cutoff sleeve dress for work,parties,everthing!",
-    },
-    {
-        name: "pinkDress",
-        price: 150,
-        category: "dresses",
-        rating: 2,
-        accessory: null,
-        quantity: 1,
-        description:
-            "Greate pink cotton summer cutoff sleeve dress for work,parties,everthing!",
-    },
-    {
-        name: "blueDress",
-        price: 200,
-        category: "dresses",
-        rating: 3,
-        accessory: null,
-        quantity: 1,
-        description:
-            "Cool blue cotton summer cutoff sleeve dress for work,parties,everthing!",
-    },
-    {
-        name: "greenPants",
-        price: 40,
-        category: "pants",
-        rating: 5,
+        image: {
+            public_id: 'blueDress_ftrurj',
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/blueDress_ftrurj.webp"
+        },
+        stock: 10
+    }
+    // },
+    // {
+    //     name: "pinkDress",
+    //     price: 150,
+    //     category: "dresses",
+    //     rating: 2,
+    //     accessory: null,
+    //     quantity: 1,
+    //     description:
+    //         "Greate pink cotton summer cutoff sleeve dress for work,parties,everthing!",
+    // },
+    // {
+    //     name: "blueDress",
+    //     price: 200,
+    //     category: "dresses",
+    //     rating: 3,
+    //     accessory: null,
+    //     quantity: 1,
+    //     description:
+    //         "Cool blue cotton summer cutoff sleeve dress for work,parties,everthing!",
+    // },
+    // {
+    //     name: "greenPants",
+    //     price: 40,
+    //     category: "pants",
+    //     rating: 5,
 
-        accessory: null,
-        quantity: 1,
-        description: "A high quality green casual women pant ",
-    },
-    {
-        name: "blackPants",
-        price: 60,
-        category: "pants",
-        rating: 3.5,
+    //     accessory: null,
+    //     quantity: 1,
+    //     description: "A high quality green casual women pant ",
+    // },
+    // {
+    //     name: "blackPants",
+    //     price: 60,
+    //     category: "pants",
+    //     rating: 3.5,
 
-        accessory: null,
-        quantity: 1,
-        description: "A high quality black casual women pant ",
-    },
-    {
-        name: "brownPants",
-        price: 50,
-        category: "pants",
-        rating: 4,
+    //     accessory: null,
+    //     quantity: 1,
+    //     description: "A high quality black casual women pant ",
+    // },
+    // {
+    //     name: "brownPants",
+    //     price: 50,
+    //     category: "pants",
+    //     rating: 4,
 
-        accessory: null,
-        quantity: 1,
-        description: "A high quality brown  casual women pant ",
-    },
-    {
-        name: "whiteShirt",
-        price: 60,
-        category: "shirts",
-        rating: 2,
+    //     accessory: null,
+    //     quantity: 1,
+    //     description: "A high quality brown  casual women pant ",
+    // },
+    // {
+    //     name: "whiteShirt",
+    //     price: 60,
+    //     category: "shirts",
+    //     rating: 2,
 
-        accessory: null,
-        quantity: 1,
-        description: "A high quality white jeans long sleeve casual women shirt ",
-    },
-    {
+    //     accessory: null,
+    //     quantity: 1,
+    //     description: "A high quality white jeans long sleeve casual women shirt ",
+    // },
+    // {
 
-        name: "blackShirt",
-        price: 70,
-        category: "shirts",
-        rating: 2.5,
+    //     name: "blackShirt",
+    //     price: 70,
+    //     category: "shirts",
+    //     rating: 2.5,
 
-        accessory: null,
-        quantity: 1,
-        description: "A high quality  black jeans long sleeve casual women shirt ",
-    },
-    {
+    //     accessory: null,
+    //     quantity: 1,
+    //     description: "A high quality  black jeans long sleeve casual women shirt ",
+    // },
+    // {
 
-        name: "brownShirt",
-        price: 80,
-        category: "shirts",
-        rating: 4,
+    //     name: "brownShirt",
+    //     price: 80,
+    //     category: "shirts",
+    //     rating: 4,
 
-        accessory: null,
-        quantity: 1,
-        description: "A high quality  brown jeans long sleeve casual women shirt ",
-    },
+    //     accessory: null,
+    //     quantity: 1,
+    //     description: "A high quality  brown jeans long sleeve casual women shirt ",
+    // },
     // {
 
     //     name: "blackWatch",
