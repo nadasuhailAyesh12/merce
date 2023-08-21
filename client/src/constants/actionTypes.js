@@ -21,7 +21,7 @@ export const Cart_ACTIONS_CONSTANTS = {
 };
 export const AUTH_ACTIONS = {
     LOGIN: "LOGIN",
-    SIGNUP: "SIGNUP",
+    Register: "Register",
     LOGOUT: "LOGOUT",
     API_SUCCESS: "API_SUCCESS",
     API_FAILURE: "API_FAILURE",

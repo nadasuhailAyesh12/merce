@@ -1,10 +1,13 @@
 const AuthService = require("../services/AuthService");
 const { expiresTime } = require("../config/enviroment").cookieConfig;
-const UserService = require("../services/UserService");
+const uploadPhoto = require('../services/UploadPhotoService')
 
 const register = async (req, res, next) => {
     try {
-        req.body.avatar = await UserService.uploadProfilePhoto(req.files);
+        req.body.avatar = await uploadPhoto(
+            req.files,
+            "avatars"
+        );
         const { user, token, tokenCookieOptions } = await AuthService.register(
             req.body
         );
@@ -14,10 +17,9 @@ const register = async (req, res, next) => {
         res.status(201).json({
             success: true,
             user,
-            token
+            token,
         });
-    }
-    catch (err) {
+    } catch (err) {
         return next(err);
     }
 };
@@ -33,10 +35,9 @@ const login = async (req, res, next) => {
         res.status(200).json({
             success: true,
             user,
-            token
+            token,
         });
-    }
-    catch (err) {
+    } catch (err) {
         return next(err);
     }
 };
@@ -51,9 +52,7 @@ const logout = async (req, res, next) => {
         res.status(200).json({
             success: true,
         });
-
-    }
-    catch (err) {
+    } catch (err) {
         next(err);
     }
 };
@@ -66,9 +65,7 @@ const forgetPassword = async (req, res, next) => {
             success: true,
             message: `Email sent to ${req.body.email}`,
         });
-
-    }
-    catch (err) {
+    } catch (err) {
         return next(err);
     }
 };
@@ -83,9 +80,7 @@ const resetPassword = async (req, res, next) => {
         res.status(200).json({
             success: true,
         });
-
-    }
-    catch (err) {
+    } catch (err) {
         return next(err);
     }
 };
@@ -101,9 +96,7 @@ const updatePassword = async (req, res, next) => {
         res.status(200).json({
             success: true,
         });
-
-    }
-    catch (err) {
+    } catch (err) {
         return next(err);
     }
 };

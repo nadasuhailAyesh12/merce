@@ -4,9 +4,6 @@ import config from "../../config";
 const instance = axios.create({
     baseURL: config.baseURl,
     withCredentials: true,
-    headers: {
-        "Content-Type": "application/json",
-    },
 });
 
 instance.interceptors.response.use(

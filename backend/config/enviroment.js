@@ -38,6 +38,7 @@ const config = {
         cloud_name: CLOUDINARY_CLOUD_NAME,
         api_key: CLOUDINARY_API_KEY,
         api_secret: CLOUDINARY_SECRET_KEY,
+        secure: true
     },
     JsonWebTokenConfig: {
         secret_key: JSONWEBTOKEN_SECRET_KEY || "nada",
