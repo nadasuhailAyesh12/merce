@@ -4,6 +4,7 @@ import CartPage from "../pages/cartPage";
 import Shipping from "../components/cart/shipping";
 import ConfirmOrder from "../components/cart/confirmOrder";
 import Login from "../components/auth/login";
+import Register from "../components/auth/register";
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ];
 

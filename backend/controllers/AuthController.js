@@ -1,13 +1,11 @@
 const AuthService = require("../services/AuthService");
 const { expiresTime } = require("../config/enviroment").cookieConfig;
-const uploadPhoto = require('../services/UploadPhotoService')
+const uploadPhoto = require("../services/UploadPhotoService");
 
 const register = async (req, res, next) => {
     try {
-        req.body.avatar = await uploadPhoto(
-            req.files,
-            "avatars"
-        );
+        const uploadedAvatar = await uploadPhoto(req.body.avatar, "avatars");
+        req.body.avatar = uploadedAvatar;
         const { user, token, tokenCookieOptions } = await AuthService.register(
             req.body
         );
