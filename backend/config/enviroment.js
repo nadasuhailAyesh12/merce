@@ -13,14 +13,12 @@ const {
     CLOUDINARY_SECRET_KEY,
     JSONWEBTOKEN_SECRET_KEY,
     COOKIE_EXPIRES_TIME,
-    SMTP_HOST,
-    SMTP_PORT,
-    SMTP_USER,
-    SMTP_PASSWORD,
-    SMTP_FROM_EMAIL,
-    SMTP_FROM_NAME,
-    STRIPE_SECRET_KEY,
-    STRIPE_API_KEY,
+    MAIL_USER,
+    MAIL_PASSWORD,
+    MAIL_FROM_NAME,
+    MAIL_HOST,
+    MAIL_PORT,
+    STRIPE_SECRET_KEY
 } = process.env;
 
 const config = {
@@ -47,17 +45,16 @@ const config = {
         expiresTime: COOKIE_EXPIRES_TIME,
     },
     nodemailerConfig: {
-        user: SMTP_USER,
-        password: SMTP_PASSWORD,
-        port: SMTP_PORT,
-        from: SMTP_FROM_EMAIL,
-        name: SMTP_FROM_NAME,
-        host: SMTP_HOST,
+        user: MAIL_USER,
+        password: MAIL_PASSWORD,
+        name: MAIL_FROM_NAME,
+        host: MAIL_HOST,
+        port: MAIL_PORT,
     },
-    stripeConfig: {
-        api_secret: STRIPE_SECRET_KEY,
-        api_key: STRIPE_API_KEY,
-    },
+    // stripeConfig: {
+    //     api_secret: STRIPE_SECRET_KEY,
+    //     api_key: STRIPE_API_KEY,
+    // },
 };
 
 module.exports = config;

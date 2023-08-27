@@ -2,10 +2,7 @@ const fs = require("fs");
 
 const APIFeatures = require("../helpers/APIFeaturesHelper");
 const ErrorHandler = require("../helpers/ErrorHandlerHelper");
-const {
-    UploadPhotoHelper,
-    destroyPhotoHelper,
-} = require("../helpers/UploadPhotoHelper");
+const { destroyPhotoHelper } = require("../helpers/UploadPhotoHelper");
 const productRepository = require("../repositories/ProductRepository");
 
 const createProduct = async (body) => {
@@ -50,33 +47,12 @@ const deleteProduct = async (id) => {
     await productRepository.deleteProduct(id);
 };
 
-const uploadPhoto = async (files) => {
-    if (files) {
-        const fileTypes = ["image/jpeg", "image/png", "image/jpg"];
-
-        if (!fileTypes.includes(files.image.mimetype)) {
-            throw new ErrorHandler("unsupported file format", 400);
-        }
-
-        const cloudPhoto = await UploadPhotoHelper(
-            files.image.tempFilePath,
-            "products"
-        );
-        const image = {
-            url: cloudPhoto.secure_url,
-            public_id: cloudPhoto.public_id,
-        };
-        fs.unlinkSync(files.image.tempFilePath);
-        return image;
-    }
-};
-
 const productService = {
     createProduct,
     getProducts,
     getSingleProduct,
     updateProduct,
-    deleteProduct,
-    uploadPhoto,
+    deleteProduct
 };
+
 module.exports = productService;
