@@ -1,12 +1,17 @@
-import React from "react";
-import { clearNonInputErrors, login } from "../../../actions/authActions";
+import React, { useState } from "react";
+import {
+  clearNonInputErrors,
+  login,
+} from "../../../actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import Navbar from "../../Common/Navbar";
+import ForgetPassword from "../forgetPasswordModal";
 
 const Login = () => {
+  const [showModal, setShowModal] = useState(false);
   const { nonInputErrors } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,8 +32,8 @@ const Login = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await dispatch(login(data.email, data.password));
-      toast.success("login sucessfuly");
+      const successMessage = await dispatch(login(data.email, data.password));
+      toast.success(successMessage);
       //todo redirect issue will implemented later
     } catch (error) {
       toast.error(error || "An error occured");
@@ -104,8 +109,16 @@ const Login = () => {
               <p className="text-danger">{errors.password.message}</p>
             )}
           </div>
-          <Link to="/password/forgot">Forgot password?</Link>
-
+          <span
+            className="text-primary cursor-pointer"
+            onClick={() => setShowModal(true)}
+          >
+            Forgot password?
+          </span>
+          <ForgetPassword
+            showModal={showModal}
+            onClose={() => setShowModal(false)}
+          />
           <button
             className="btn btn-primary btn-lg btn-block btn w-100 rounded mt-3 my-2"
             type="submit"
@@ -113,7 +126,7 @@ const Login = () => {
           >
             {isSubmitting ? "Submitting" : "Login"}
           </button>
-          <p className="text-danger"> {nonInputErrors}</p>
+          {/* <p className="text-danger"> {nonInputErrors}</p> */}
           <hr className="my-2.5" />
           <button className="btn btn-danger btn-lg btn-block btn w-100 rounded my-2">
             <i className="fab fa-google me-2" /> Sign in with google

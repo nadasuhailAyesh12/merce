@@ -19,7 +19,7 @@ export const login = (email, password) => async (dispatch) => {
             }
         );
         dispatch({ type: "API_SUCCESS", payload: response.data.user });
-        return response;
+        return response.data.message || "operation success";
     } catch (error) {
         dispatch({
             type: "API_FAILURE",
@@ -38,6 +38,30 @@ export const signup = (userData) => async (dispatch) => {
             },
         });
         dispatch({ type: "API_SUCCESS", payload: response.data.user });
+        return response.data.message || "operation success";
+    } catch (error) {
+        dispatch({
+            type: "API_FAILURE",
+            payload: error,
+        });
+        throw error; //give the error to caller to handle it
+    }
+};
+
+export const forgetPassword = (email) => async (dispatch) => {
+    try {
+        dispatch({ type: "API_REQUEST" });
+        const response = await axios.post(
+            "/auth/forgetPassword",
+            { email },
+            // {
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            // }
+        );
+        dispatch({ type: "API_SUCCESS" });
+        return response.data.message || "operation success";
     } catch (error) {
         dispatch({
             type: "API_FAILURE",
