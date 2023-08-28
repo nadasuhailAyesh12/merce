@@ -5,7 +5,7 @@ import { forgetPassword } from "../../../actions/authActions";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const UpdatePassword = ({ showModal, onClose }) => {
+const ForgetPassword = ({ showModal, onClose }) => {
   const dispatch = useDispatch();
   const {
     register,
@@ -82,4 +82,4 @@ const UpdatePassword = ({ showModal, onClose }) => {
   );
 };
 
-export default UpdatePassword;
+export default ForgetPassword;

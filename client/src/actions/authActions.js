@@ -93,3 +93,26 @@ export const resetPassword = (passwords, token) => async (dispatch) => {
         throw error; //give the error to caller to handle it
     }
 };
+
+export const updatePassword = (passwords) => async (dispatch) => {
+    try {
+        dispatch({ type: "API_REQUEST" });
+        const response = await axios.put(
+            `/auth/updatePassword`,
+            passwords
+            // {
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            // }
+        );
+        dispatch({ type: "API_SUCCESS" });
+        return response.data.message || "operation success";
+    } catch (error) {
+        dispatch({
+            type: "API_FAILURE",
+            payload: error,
+        });
+        throw error; //give the error to caller to handle it
+    }
+};
