@@ -18,7 +18,8 @@ const {
     MAIL_FROM_NAME,
     MAIL_HOST,
     MAIL_PORT,
-    STRIPE_SECRET_KEY
+    STRIPE_SECRET_KEY,
+    FRONTEND_URL,
 } = process.env;
 
 const config = {
@@ -36,7 +37,7 @@ const config = {
         cloud_name: CLOUDINARY_CLOUD_NAME,
         api_key: CLOUDINARY_API_KEY,
         api_secret: CLOUDINARY_SECRET_KEY,
-        secure: true
+        secure: true,
     },
     JsonWebTokenConfig: {
         secret_key: JSONWEBTOKEN_SECRET_KEY || "nada",
@@ -51,6 +52,7 @@ const config = {
         host: MAIL_HOST,
         port: MAIL_PORT,
     },
+    frontendURL: FRONTEND_URL,
     // stripeConfig: {
     //     api_secret: STRIPE_SECRET_KEY,
     //     api_key: STRIPE_API_KEY,
