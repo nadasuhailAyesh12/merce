@@ -28,6 +28,7 @@ const authReducer = (state = initialState, action) => {
                 loading: false,
                 nonInputErrors: action.payload,
                 user: null,
+                isAuthenticated: false,
             };
         case AUTH_ACTIONS.CLEAR_NONINPUTERRORS: {
             return {

@@ -130,3 +130,18 @@ export const logout = () => async (dispatch) => {
         throw error; //give the error to caller to handle it
     }
 };
+
+export const loadUser = () => async (dispatch) => {
+    try {
+        dispatch({ type: "API_REQUEST" });
+        const response = await axios.get("/user/me");
+        dispatch({ type: "API_SUCCESS", payload: response.data.user });
+        return response.data.message || "operation success";
+    } catch (error) {
+        dispatch({
+            type: "API_FAILURE",
+            payload: error,
+        });
+        throw error; //give the error to caller to handle it
+    }
+};
