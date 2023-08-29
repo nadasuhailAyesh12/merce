@@ -5,10 +5,23 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaSistrix, FaShoppingCart } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { logout } from "../actions/authActions";
 
 function NavScrollExample() {
-  const { user } = useSelector((state) => state.auth);
+  const { user, loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const logoutHandler = async () => {
+    try {
+      const message = await dispatch(logout());
+      toast.success(message);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   return (
     <Navbar
       expand="lg"
@@ -37,35 +50,44 @@ function NavScrollExample() {
             </Form>
           </Nav>
           <Nav className="mr-100">
-            <figure className="avatar item-rtl mt-2">
-              <img
-                src={user.avatar && user.avatar.url}
-                className="rounded-circle"
-              />
-            </figure>
+            {user ? (
+              <>
+                <figure className="avatar item-rtl mt-2">
+                  <img
+                    src={user.avatar && user.avatar.url}
+                    className="rounded-circle"
+                  />
+                </figure>
 
-            <NavDropdown
-              style={{ fontSize: 24, marginTop: 5 }}
-              title={user.name}
-              id="navbarScrollingDropdown"
-            >
-              <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                Something else here
-              </NavDropdown.Item>
-            </NavDropdown>
+                <NavDropdown
+                  style={{ fontSize: 24, marginTop: 5 }}
+                  title={user && user.name}
+                  id="navbarScrollingDropdown"
+                >
+                  <NavDropdown.Item href="/me">Profile</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/orders/me">Orders</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={logoutHandler} href="/">
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            ) : (
+              !loading && (
+                <Nav.Link href="/login">
+                  <button className="btn btn-danger mt-1">Login</button>
+                </Nav.Link>
+              )
+            )}
 
-            <Nav.Link>
+            <Nav.Link href="/cart">
               <button
                 type="button"
                 className="btn"
                 style={{ position: "relative", top: 3 }}
               >
-                <FaShoppingCart size={28} />
+                <FaShoppingCart size={30} />
                 <span
                   className="badge badge-danger ms-2 "
                   style={{ position: "absolute", right: 2 }}

@@ -1,7 +1,7 @@
 import { AUTH_ACTIONS } from "../constants/actionTypes";
 
 const initialState = {
-    user: {},
+    user: null,
     nonInputErrors: null,
     loading: false,
     isAuthenticated: false,
@@ -27,12 +27,20 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 nonInputErrors: action.payload,
-                user: null
+                user: null,
             };
         case AUTH_ACTIONS.CLEAR_NONINPUTERRORS: {
             return {
                 ...state,
                 nonInputErrors: null,
+            };
+        }
+        case AUTH_ACTIONS.LOGOUT: {
+            return {
+                ...state,
+                user: null,
+                isAuthenticated: false,
+                loading: false,
             };
         }
         default: {

@@ -116,3 +116,17 @@ export const updatePassword = (passwords) => async (dispatch) => {
         throw error; //give the error to caller to handle it
     }
 };
+export const logout = () => async (dispatch) => {
+    try {
+        dispatch({ type: "API_REQUEST" });
+        const response = await axios.get(`/auth/logout`);
+        dispatch({ type: "LOGOUT" });
+        return response.data.message || "operation success";
+    } catch (error) {
+        dispatch({
+            type: "API_FAILURE",
+            payload: error,
+        });
+        throw error; //give the error to caller to handle it
+    }
+};
