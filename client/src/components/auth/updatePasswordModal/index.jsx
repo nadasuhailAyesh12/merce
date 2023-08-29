@@ -23,11 +23,12 @@ const UpdatePassword = ({ showModal, onClose }) => {
     try {
       const message = await dispatch(updatePassword(data));
       toast.success(message);
+      onClose();
     } catch (error) {
       toast.error(error);
     }
   });
-    
+
   return (
     <Modal show={showModal} onHide={onClose}>
       <Modal.Header closeButton>
