@@ -52,6 +52,7 @@ const Register = () => {
       await dispatch(signup(userData));
       console.log(userData);
       toast.success("register sucessfuly");
+           navigate('/me')
       //todo redirect issue will implemented later
     } catch (error) {
       toast.error(error || "An error occured");

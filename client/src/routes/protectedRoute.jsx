@@ -7,13 +7,7 @@ import { Navigate } from "react-router-dom";
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useSelector((state) => state.auth);
 
-  return loading ? (
-    <Loader />
-  ) : !loading && isAuthenticated ? (
-    children
-  ) : (
-    <Navigate to="/login" />
-  );
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

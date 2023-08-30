@@ -118,7 +118,6 @@ export const updatePassword = (passwords) => async (dispatch) => {
 };
 export const logout = () => async (dispatch) => {
     try {
-        dispatch({ type: "API_REQUEST" });
         const response = await axios.get(`/auth/logout`);
         dispatch({ type: "LOGOUT" });
         return response.data.message || "operation success";

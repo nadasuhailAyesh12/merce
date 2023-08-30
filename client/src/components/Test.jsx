@@ -68,7 +68,7 @@ function NavScrollExample() {
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/orders/me">Orders</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={logoutHandler} href="/">
+                  <NavDropdown.Item onClick={logoutHandler} href="/login">
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>

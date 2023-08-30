@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -35,8 +35,8 @@ const UpdatePassword = ({ showModal, onClose }) => {
         <Modal.Title>update your password</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
-          <div className="form-outline mb-4.5">
+        <form style={{ width: 450 }}>
+          <div className="form-outline  my-3">
             <input
               type="password"
               {...register("oldPassword", {
@@ -63,7 +63,7 @@ const UpdatePassword = ({ showModal, onClose }) => {
               <p className="text-danger">{errors.oldPassword.message}</p>
             )}
           </div>
-          <div className="form-outline mb-2.5">
+          <div className="form-outline">
             <input
               type="password"
               {...register("newPassword", {
@@ -90,7 +90,7 @@ const UpdatePassword = ({ showModal, onClose }) => {
               <p className="text-danger">{errors.newPassword.message}</p>
             )}
           </div>
-        </Form>
+        </form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={onSubmit}>

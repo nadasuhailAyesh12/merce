@@ -7,6 +7,7 @@ import Login from "../components/auth/login";
 import Register from "../components/auth/register";
 import ResetPassword from "../components/auth/resetPassword";
 import Profile from "../components/user/profile";
+import ProtectedRoute from "./protectedRoute";
 
 const routes = [
   {
@@ -19,11 +20,19 @@ const routes = [
   },
   {
     path: "/shipping",
-    element: <Shipping />,
+    element: (
+      <ProtectedRoute>
+        <Shipping />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/confirm",
-    element: <ConfirmOrder />,
+    element: (
+      <ProtectedRoute>
+        <ConfirmOrder />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/login",
@@ -39,7 +48,11 @@ const routes = [
   },
   {
     path: "/me",
-    element: <Profile />,
+    element: (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+    ),
   },
 ];
 

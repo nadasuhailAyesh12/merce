@@ -34,6 +34,7 @@ const Login = () => {
     try {
       const successMessage = await dispatch(login(data.email, data.password));
       toast.success(successMessage);
+      navigate('/me')
       //todo redirect issue will implemented later
     } catch (error) {
       toast.error(error || "An error occured");
