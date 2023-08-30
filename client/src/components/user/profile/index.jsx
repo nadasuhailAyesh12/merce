@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import NavScrollExample from "../../Test";
 import UpdatePassword from "../../auth/updatePasswordModal";
+import UpdateProfile from "../updateProfileModal";
 
 const Profile = () => {
+  const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
+  const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
   const { user, loading } = useSelector((state) => state.auth);
-  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
@@ -17,23 +19,27 @@ const Profile = () => {
         <Loader />
       ) : (
         <>
-          <h2 className="mt-5 mb-4 profile">My Profile</h2>
+          <h2 className="mt-5 mb-4  profile">My Profile</h2>
           <div className="row justify-content-around  user-info">
             <div className="col-12 col-md-3">
               <figure className="avatar avatar-profile ">
                 <img
-                  className="rounded-circle img-fluid"
+                  className="rounded-circle  profile-avatar"
                   src={user.avatar.url}
                   alt={user.name}
                 />
               </figure>
-              <Link
-                to="/me/update"
+              <button
                 id="edit_profile"
                 className="btn btn-danger btn-lg btn-block btn w-100 rounded my-2"
+                onClick={() => setShowUpdateProfileModal(true)}
               >
                 Edit Profile
-              </Link>
+              </button>
+              <UpdateProfile
+                onClose={() => setShowUpdateProfileModal(false)}
+                showModal={showUpdateProfileModal}
+              />
             </div>
 
             <div className="col-12 col-md-5 ">
@@ -56,14 +62,14 @@ const Profile = () => {
               )}
 
               <button
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowUpdatePasswordModal(true)}
                 className="btn btn-primary btn-block mt-5"
               >
                 Change Password
               </button>
               <UpdatePassword
-                showModal={showModal}
-                onClose={() => setShowModal(false)}
+                showModal={showUpdatePasswordModal}
+                onClose={() => setShowUpdatePasswordModal(false)}
               />
             </div>
           </div>

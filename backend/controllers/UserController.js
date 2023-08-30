@@ -1,6 +1,8 @@
 const CatchAsyncErrors = require("../middlewars/CatchAsyncErrorsMiddleware");
 const ErrorHandler = require("../helpers/ErrorHandlerHelper");
 const UserService = require("../services/UserService");
+const { destroyPhotoHelper } = require("../helpers/UploadPhotoHelper");
+const uploadPhoto = require("../services/UploadPhotoService");
 
 const getLoginUserProfile = CatchAsyncErrors(async (req, res) => {
     res.status(200).json({
@@ -53,13 +55,21 @@ const updateUser = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
     try {
+        if (req.body.avatar) {
+            const imageID = req.user.avatar.public_id;
+
+            await destroyPhotoHelper(imageID);
+            req.body.avatar = await uploadPhoto(req.body.avatar, "avatars");
+        }
+
         const user = await UserService.updateUser(req.user.id, req.body);
 
         res.status(200).json({
             success: true,
             user,
         });
-    } catch (err) {
+    }
+    catch (err) {
         if (err instanceof ErrorHandler) {
             return next(err);
         }
@@ -68,7 +78,7 @@ const updateProfile = async (req, res, next) => {
             const message = Object.values(err.errors).map((value) => value.message);
             err = new ErrorHandler(message, 400);
         }
-
+        console.log(err);
         res.status(err.statusCode || 500).json({
             success: false,
             message: err.message,
