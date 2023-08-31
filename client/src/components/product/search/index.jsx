@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useEffect } from "react";
+import { useRef, } from "react";
 
 import "./style.css";
 import {
+  setCurrentPage,
   setSearchQuery,
   updateFilteredProducts,
 } from "../../../actions/productActions";
@@ -51,6 +52,7 @@ const Search = () => {
         placeholder="Search product"
         value={searchQuery}
         onChange={(e) => {
+          dispatch(setCurrentPage(1))
           dispatch(setSearchQuery(e.target.value));
           dispatch(
             updateFilteredProducts(

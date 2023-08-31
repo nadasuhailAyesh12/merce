@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./style.css";
 import Navbar from "../../components/Common/Navbar";
 import ProductList from "../../components/product/productList";
@@ -7,16 +7,30 @@ import Sort from "../../components/product/sort";
 import Filter from "../../components/product/filter";
 import Pagination from "../../components/product/pagination";
 import Loader from "../../components/Common/loader";
+import { updateFilteredProducts } from "../../actions/productActions";
+import { toast } from "react-toastify";
 
 const ProductPage = () => {
-  // const error = useSelector(state => state.cart.error)
+  const dispatch = useDispatch();
+  const { searchQuery, selectedFilter, selectedSortingOption, currentPage } =
+    useSelector((state) => state.products);
   const loading = useSelector((state) => state.products.loading);
   const [showMobileFilter, setMobileFilter] = useState(false);
 
-  // const showErrorToast = (message) => {
-  //   toast.error(message);
-  //   dispatch(clearError());
-  // };
+  useEffect(() => {
+    try {
+      dispatch(
+        updateFilteredProducts(
+          searchQuery,
+          selectedFilter,
+          selectedSortingOption,
+          currentPage
+        )
+      );
+    } catch (error) {
+      toast.error(error);
+    }
+  }, []);
 
   return (
     <>

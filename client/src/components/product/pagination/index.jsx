@@ -14,6 +14,7 @@ const Pagination = () => {
     selectedSortingOption,
     currentPage,
   } = useSelector((state) => state.products);
+  console.log(filteredProducts);
   const dispatch = useDispatch();
 
   const totalPages =
@@ -25,7 +26,7 @@ const Pagination = () => {
     (_, index) => index + 1
   );
 
-  const handlePreviousPage = (e) => {
+  const handlePreviousPage = (e, pageNumber) => {
     e.preventDefault();
     dispatch(setCurrentPage(Math.max(currentPage - 1), 1));
     dispatch(
@@ -33,12 +34,12 @@ const Pagination = () => {
         searchQuery,
         selectedFilter,
         selectedSortingOption,
-        Number(e.target.textContent)
+        Number(pageNumber) - 1
       )
     );
   };
 
-  const handleNextPage = (e) => {
+  const handleNextPage = (e, pageNumber) => {
     e.preventDefault();
     dispatch(setCurrentPage(Math.min(currentPage + 1, totalPages)));
     dispatch(
@@ -46,7 +47,7 @@ const Pagination = () => {
         searchQuery,
         selectedFilter,
         selectedSortingOption,
-        Number(e.target.textContent)
+        Number(pageNumber) + 1
       )
     );
   };
@@ -59,7 +60,7 @@ const Pagination = () => {
         searchQuery,
         selectedFilter,
         selectedSortingOption,
-        pageNumber
+        Number(pageNumber)
       )
     );
   };
@@ -68,7 +69,10 @@ const Pagination = () => {
     <nav aria-label="...">
       <ul className="pagination d-flex justify-content-center m-11">
         <li className="page-item">
-          <a className="page-link " onClick={handlePreviousPage}>
+          <a
+            className="page-link "
+            onClick={(e) => handlePreviousPage(e, currentPage)}
+          >
             &laquo;
           </a>
         </li>
@@ -87,7 +91,11 @@ const Pagination = () => {
           </li>
         ))}
         <li className="page-item">
-          <a className="page-link" onClick={handleNextPage} href="#">
+          <a
+            className="page-link"
+            onClick={(e) => handleNextPage(e, currentPage)}
+            href="#"
+          >
             &raquo;
           </a>
         </li>

@@ -1,103 +1,127 @@
-
 const products = [
     {
         name: "blueDress",
         price: 110,
         category: "dresses",
         rating: 1,
-        accessory: null,
         quantity: 1,
         description:
             "New look A green cotton summer cutoff sleeve dress for work,parties,everthing!",
         image: {
-            public_id: 'blueDress_ftrurj',
-            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/blueDress_ftrurj.webp"
+            public_id: "blueDress_ftrurj",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/blueDress_ftrurj.webp",
         },
-        stock: 10
-    }
-    // },
-    // {
-    //     name: "pinkDress",
-    //     price: 150,
-    //     category: "dresses",
-    //     rating: 2,
-    //     accessory: null,
-    //     quantity: 1,
-    //     description:
-    //         "Greate pink cotton summer cutoff sleeve dress for work,parties,everthing!",
-    // },
-    // {
-    //     name: "blueDress",
-    //     price: 200,
-    //     category: "dresses",
-    //     rating: 3,
-    //     accessory: null,
-    //     quantity: 1,
-    //     description:
-    //         "Cool blue cotton summer cutoff sleeve dress for work,parties,everthing!",
-    // },
-    // {
-    //     name: "greenPants",
-    //     price: 40,
-    //     category: "pants",
-    //     rating: 5,
+        stock: 10,
+    },
+    {
+        name: "pinkDress",
+        price: 150,
+        category: "dresses",
+        rating: 2,
+        accessory: null,
+        quantity: 1,
+        description:
+            "Greate pink cotton summer cutoff sleeve dress for work,parties,everthing!",
+        image: {
+            public_id: "pinkDress_onftp4",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259663/products/pinkDress_onftp4.webp",
+        },
+        stock: 30,
+    },
+    {
+        name: "greenDress",
+        price: 200,
+        category: "dresses",
+        rating: 3,
+        quantity: 1,
+        description:
+            "Cool green cotton summer cutoff sleeve dress for work,parties,everthing!",
+        image: {
+            public_id: "greenDress_ybvpz4",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259662/products/greenDress_ybvpz4.webp",
+        },
+        stock: 50,
+    },
+    {
+        name: "greenPants",
+        price: 40,
+        category: "pants",
+        rating: 5,
+        quantity: 1,
+        description: "A high quality green casual women pant ",
+        image: {
+            public_id: "greenPant_iig4me",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259662/products/greenPant_iig4me.webp",
+        },
+        stock: 40,
+    },
+    {
+        name: "blackPants",
+        price: 60,
+        category: "pants",
+        rating: 3.5,
 
-    //     accessory: null,
-    //     quantity: 1,
-    //     description: "A high quality green casual women pant ",
-    // },
-    // {
-    //     name: "blackPants",
-    //     price: 60,
-    //     category: "pants",
-    //     rating: 3.5,
-
-    //     accessory: null,
-    //     quantity: 1,
-    //     description: "A high quality black casual women pant ",
-    // },
-    // {
-    //     name: "brownPants",
-    //     price: 50,
-    //     category: "pants",
-    //     rating: 4,
-
-    //     accessory: null,
-    //     quantity: 1,
-    //     description: "A high quality brown  casual women pant ",
-    // },
-    // {
-    //     name: "whiteShirt",
-    //     price: 60,
-    //     category: "shirts",
-    //     rating: 2,
-
-    //     accessory: null,
-    //     quantity: 1,
-    //     description: "A high quality white jeans long sleeve casual women shirt ",
-    // },
-    // {
-
-    //     name: "blackShirt",
-    //     price: 70,
-    //     category: "shirts",
-    //     rating: 2.5,
-
-    //     accessory: null,
-    //     quantity: 1,
-    //     description: "A high quality  black jeans long sleeve casual women shirt ",
-    // },
-    // {
-
-    //     name: "brownShirt",
-    //     price: 80,
-    //     category: "shirts",
-    //     rating: 4,
-
-    //     accessory: null,
-    //     quantity: 1,
-    //     description: "A high quality  brown jeans long sleeve casual women shirt ",
-    // },
+        accessory: null,
+        quantity: 1,
+        description: "A high quality black casual women pant ",
+        image: {
+            public_id: "blackPant_jagedx",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/blackPant_jagedx.webp",
+        },
+        stock: 45,
+    },
+    {
+        name: "brownPants",
+        price: 50,
+        category: "pants",
+        rating: 4,
+        quantity: 1,
+        description: "A high quality brown  casual women pant ",
+        image: {
+            public_id: "brownPant_iuz2r0",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownPant_iuz2r0.webp",
+        },
+        stock: 50,
+    },
+    {
+        name: "whiteShirt",
+        price: 60,
+        category: "shirts",
+        rating: 2,
+        quantity: 1,
+        description: "A high quality white jeans long sleeve casual women shirt ",
+        image: {
+            public_id: "whiteShirt_onxfjq",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259664/products/whiteShirt_onxfjq.webp",
+        },
+        stock: 50,
+    },
+    {
+        name: "blackShirt",
+        price: 70,
+        category: "shirts",
+        rating: 2.5,
+        quantity: 1,
+        description: "A high quality  black jeans long sleeve casual women shirt ",
+        image: {
+            public_id: "blackShirt_yewlbz",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/blackShirt_yewlbz.webp",
+        },
+        stock: 40,
+    },
+    {
+        name: "brownShirt",
+        price: 80,
+        category: "shirts",
+        rating: 4,
+        quantity: 1,
+        description: "A high quality  brown jeans long sleeve casual women shirt ",
+        image: {
+            public_id: "brownShirt_do0rfv",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownShirt_do0rfv.webp",
+        },
+        stock: 60,
+    },
     // {
 
     //     name: "blackWatch",
@@ -108,6 +132,11 @@ const products = [
     //     accessory: "watches",
     //     quantity: 1,
     //     description: "A high quality black watch ",
+    //     image: {
+    //         public_id: "brownShirt_do0rfv",
+    //         url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownShirt_do0rfv.webp",
+    //     },
+    //     stock: 10,
     // },
     // {
 
@@ -239,16 +268,19 @@ const products = [
     //     quantity: 1,
     //     description: "A high quality GCUI hat ",
     // },
-    // {
-    //     name: "BrownHat",
-    //     price: 60,
-    //     category: null,
-    //     rating: 2.5,
-    //     image: productsImages.brownHat,
-    //     accessory: "hats",
-    //     quantity: 1,
-    //     description: "A high quality brown hat ",
-    // },
+    {
+        name: "BrownHat",
+        price: 60,
+        category: "hats",
+        rating: 2.5,
+        quantity: 1,
+        description: "A high quality brown hat ",
+        image: {
+            public_id: "brownHat_ccztz0",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownHat_ccztz0.webp",
+        },
+        stock: 15,
+    },
     // {
     //     name: "blackBelt",
     //     price: 10,
@@ -269,17 +301,75 @@ const products = [
     //     quantity: 1,
     //     description: "A high quality brown hat ",
     // },
-    // {
-
-    //     name: "brownBelt",
-    //     price: 20,
-    //     category: null,
-    //     rating: 3.5,
-    //     image: productsImages.brownBelt,
-    //     accessory: "belts",
-    //     quantity: 1,
-    //     description: "A high quality brown hat ",
-    // },
+    {
+        name: "brownBelt",
+        price: 20,
+        rating: 3.5,
+        category: "belts",
+        quantity: 1,
+        description: "A high quality brown belt ",
+        image: {
+            public_id: "brownBelt_p1b27j",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownBelt_p1b27j.webp",
+        },
+        stock: 10,
+    },
+    {
+        name: "brownBelt",
+        price: 20,
+        category: null,
+        rating: 3.5,
+        accessory: "belts",
+        quantity: 1,
+        description: "A high quality brown belt ",
+        image: {
+            public_id: "brownBelt_p1b27j",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownBelt_p1b27j.webp",
+        },
+        stock: 10,
+    },
+    {
+        name: "brownBelt",
+        price: 20,
+        category: null,
+        rating: 3.5,
+        accessory: "belts",
+        quantity: 1,
+        description: "A high quality brown belt ",
+        image: {
+            public_id: "brownBelt_p1b27j",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownBelt_p1b27j.webp",
+        },
+        stock: 10,
+    },
+    {
+        name: "brownBelt",
+        price: 20,
+        category: null,
+        rating: 3.5,
+        accessory: "belts",
+        quantity: 1,
+        description: "A high quality brown belt ",
+        image: {
+            public_id: "brownBelt_p1b27j",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownBelt_p1b27j.webp",
+        },
+        stock: 10,
+    },
+    {
+        name: "brownBelt",
+        price: 20,
+        category: null,
+        rating: 3.5,
+        accessory: "belts",
+        quantity: 1,
+        description: "A high quality brown belt ",
+        image: {
+            public_id: "brownBelt_p1b27j",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownBelt_p1b27j.webp",
+        },
+        stock: 10,
+    },
     // {
     //     name: " diamondRing",
     //     price: 200,
@@ -374,16 +464,19 @@ const products = [
     //     quantity: 1,
     //     description: "A high quality rose watch",
     // },
-    // {
-    //     name: "brownSkirt",
-    //     price: 170,
-    //     category: "skirts",
-    //     rating: 3.5,
-    //     image: productsImages.brownSkirt,
-    //     accessory: null,
-    //     quantity: 1,
-    //     description: "A high quality brown skirt ",
-    // },
+    {
+        name: "brownSkirt",
+        price: 170,
+        category: "skirts",
+        rating: 3.5,
+        quantity: 1,
+        description: "A high quality brown skirt ",
+        image: {
+            public_id: "brownSkirt_otwxww",
+            url: "https://res.cloudinary.com/dlet9uuef/image/upload/v1692259665/products/brownSkirt_otwxww.webp",
+        },
+        stock: 20,
+    },
     // {
 
     //     name: "whiteSkirt",
@@ -451,4 +544,4 @@ const products = [
     //     quantity: 1,
     // },
 ];
-module.exports = products
+module.exports = products;

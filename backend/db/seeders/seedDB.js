@@ -5,7 +5,8 @@ const { uri } = require("../../config/enviroment").database
 
 const seedData = () => {
     const seeder = new Seeder({
-        database: uri
+        database: uri,
+        dropDatabase: true
     });
 
     const collections = [

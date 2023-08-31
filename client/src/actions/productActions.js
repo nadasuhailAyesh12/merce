@@ -31,17 +31,17 @@ export const setCurrentPage = (page) => {
 export const updateFilteredProducts =
     (searchQuery, selectedFilter, selectedSortingOption, currentPage) =>
         async (dispatch) => {
-            dispatch({ type: "API_REQUEST" });
-
             try {
+                dispatch({ type: "API_REQUEST" });
                 const response = await getProducts(
                     searchQuery,
                     selectedFilter,
                     selectedSortingOption,
                     currentPage
                 );
-                dispatch({ type: "SUCCESS", payload: response.data.products });
+                dispatch({ type: "API_SUCCESS", payload: response.data.products });
             } catch (error) {
-                dispatch({ type: "FAILURE", payload: error });
+                dispatch({ type: "API_FAILURE", payload: error });
+                throw error; // throw it to product page to handle it
             }
         };
