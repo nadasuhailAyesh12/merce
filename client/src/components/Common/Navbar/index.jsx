@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Search from "../../product/search";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import "./style.css";
 
-const Navbar = ({ showSearch }) => {
+const Navbar = () => {
+  const location=useLocation()
   const [showMobileNav, setShowMobileNav] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
 
@@ -30,7 +31,7 @@ const Navbar = ({ showSearch }) => {
         id="navbarColor"
       >
         <ul className="navbar-nav">
-          {showSearch && <Search />}
+          {location.pathname==='/'&& <Search />}
 
           <li className="nav-item ">
             <Link to="/cart">
