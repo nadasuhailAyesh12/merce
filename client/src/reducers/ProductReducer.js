@@ -35,21 +35,21 @@ const productReducer = (state = initialState, action) => {
                 ...state,
                 currentPage: action.payload,
             };
-        case PRODUCTS_ACTIONS_CONSTANTS.API_SUCCESS:
+        case PRODUCTS_ACTIONS_CONSTANTS.PRODUCT_API_SUCCESS:
             return {
                 ...state,
                 filteredProducts: action.payload,
                 loading: false,
             };
 
-        case PRODUCTS_ACTIONS_CONSTANTS.API_FAILURE:
+        case PRODUCTS_ACTIONS_CONSTANTS.PRODUCT_API_FAILURE:
             return {
                 ...state,
                 loading: false,
                 error: action.payload,
             };
 
-        case PRODUCTS_ACTIONS_CONSTANTS.API_REQUEST:
+        case PRODUCTS_ACTIONS_CONSTANTS.PRODUCT_API_REQUEST:
             return {
                 ...state,
                 loading: true,

@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loadUser } from "../actions/authActions";
-import Loader from "../components/Common/loader";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useSelector((state) => state.auth);
-
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  //store the location of user before redirecting to return him to it after login
+  if (!isAuthenticated) {
+    sessionStorage.setItem("intendedDestination", window.location.pathname);
+    return <Navigate to="/login" />;
+  }
+  else {
+    return children;
+  }
 };
 
 export default ProtectedRoute;

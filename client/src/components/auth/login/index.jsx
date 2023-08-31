@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  clearNonInputErrors,
-  login,
-} from "../../../actions/authActions";
+import { clearNonInputErrors, login } from "../../../actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -32,17 +29,17 @@ const Login = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      const intendedDestination = sessionStorage.getItem("intendedDestination");
+      sessionStorage.removeItem("intendedDestination");
       const successMessage = await dispatch(login(data.email, data.password));
       toast.success(successMessage);
-      navigate('/me')
-      //todo redirect issue will implemented later
+      navigate(intendedDestination || "/");
     } catch (error) {
       toast.error(error || "An error occured");
     }
   });
   return (
     <>
-      <Navbar />
       <div
         className="d-flex justify-content-center align-items-center"
         style={{ marginTop: 30 }}
