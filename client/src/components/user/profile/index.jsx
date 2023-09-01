@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import Loader from "../../Common/loader";
 import { Link } from "react-router-dom";
 import "./style.css";
-import NavScrollExample from "../../Test";
 import UpdatePassword from "../../auth/updatePasswordModal";
 import UpdateProfile from "../updateProfileModal";
 
@@ -14,7 +13,7 @@ const Profile = () => {
 
   return (
     <>
-      <NavScrollExample />
+
       {loading ? (
         <Loader />
       ) : (

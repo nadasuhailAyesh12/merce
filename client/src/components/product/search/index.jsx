@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, } from "react";
-
+import Form from "react-bootstrap/Form";
 import "./style.css";
 import {
   setCurrentPage,
@@ -13,59 +12,41 @@ const Search = () => {
   const { searchQuery, selectedFilter, selectedSortingOption, currentPage } =
     useSelector((state) => state.products);
   const dispatch = useDispatch();
-  const searchInputRef = useRef(null);
-  //clear search when clicking outside
-  // useEffect(() => {
-  //   const handleDocumentClick = (event) => {
-  //     if (
-  //       searchInputRef.current &&
-  //       !searchInputRef.current.contains(event.target)
-  //     ) {
-  //       dispatch(setSearchQuery(""));
-  //       dispatch(
-  //         updateFilteredProducts(
-  //           searchQuery,
-  //           selectedFilter,
-  //           selectedSortingOption,
-  //           currentPage
-  //         )
-  //       );
-  //     }
-  //   };
 
-  //   document.addEventListener("click", handleDocumentClick);
-
-  //   return () => {
-  //     document.removeEventListener("click", handleDocumentClick);
-  //   };
-  // }, [searchQuery, selectedFilter, selectedSortingOption, currentPage]);
-
+  const handleSearch = (e) => {
+    dispatch(setCurrentPage(1));
+    dispatch(setSearchQuery(e.target.value));
+    dispatch(
+      updateFilteredProducts(
+        e.target.value,
+        selectedFilter,
+        selectedSortingOption,
+        currentPage
+      ))
+  };
+ 
   return (
-    <li
-      ref={searchInputRef}
-      className="nav-item rounded bg-light search-nav-item"
-    >
-      <input
-        type="text"
-        id="search"
-        className="bg-light"
-        placeholder="Search product"
-        value={searchQuery}
-        onChange={(e) => {
-          dispatch(setCurrentPage(1))
-          dispatch(setSearchQuery(e.target.value));
-          dispatch(
-            updateFilteredProducts(
-              e.target.value,
-              selectedFilter,
-              selectedSortingOption,
-              currentPage
-            )
-          );
-        }}
+    <div>
+    <Form className="d-flex " >
+      <Form.Control
+          type="search"
+          placeholder="Search product"
+          className="nav-item rounded bg-light search-nav-item me-2 "
+          value={searchQuery}
+          onChange={handleSearch}
+          onBlur={() => {
+            handleSearch({
+              target: {
+              value:""
+            }})
+          }
+        }
+          aria-label="Search product"
+         
       />
-      <span className="fa fa-search text-muted" />
-    </li>
+      
+      </Form>
+      </div>
   );
 };
 

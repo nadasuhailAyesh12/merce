@@ -28,7 +28,7 @@ const ProductItem = ({ product }) => {
             <div className="ml-auto"></div>
           </div>
           <button
-            className="btn w-100 rounded my-2"
+            className="btn w-100 rounded my-2 btn-danger"
             onClick={() => {
               dispatch(addToCart(product));
             }}

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./style.css";
-import Navbar from "../../components/Common/Navbar";
 import ProductList from "../../components/product/productList";
 import Sort from "../../components/product/sort";
 import Filter from "../../components/product/filter";
@@ -34,13 +33,10 @@ const ProductPage = () => {
 
   return (
     <>
-      {/* ------------------------Header------------------------*/}
-      <Navbar showSearch={true} />
-
       {/* ------------------------Filter section ------------------------*/}
       <div className="filter">
         <button
-          className="btn btn-default"
+          className="btn btn-danger mb-3 "
           type="button"
           onClick={() => setMobileFilter(!showMobileFilter)}
         >
