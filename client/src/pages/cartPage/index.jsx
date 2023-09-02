@@ -12,9 +12,7 @@ const CartPage = () => {
 
   return (
     <>
-      {/* ------------------------Header------------------------*/}
-      <Navbar showSearch={false} />
-
+    
       {/* ------------------------main  content------------------------*/}
       <section className="shopping-cart dark">
         <div className="container">
@@ -42,7 +40,7 @@ const CartPage = () => {
                       <span className="detail">Total</span>
                       <span className="price">{totalPrice}</span>
                       <hr />
-                      <button className="btn w-100 rounded my-2 checkout_btn"onClick={()=>navigate('/shipping')}>checkout</button>
+                      <button className="btn w-100 rounded my-2 btn-danger"onClick={()=>navigate('/shipping')}>checkout</button>
                     </div>
                   </div>
                 </div>

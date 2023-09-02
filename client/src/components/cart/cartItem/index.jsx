@@ -1,11 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { deleteFromCart, updateQuantity } from "../../../actions/cartActions";
 import "./style.css";
 import { toast } from "react-toastify";
 
 const CartItem = ({ item }) => {
+  const { cartItems, totalPrice } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const handleDelete = () => {
@@ -19,8 +20,12 @@ const CartItem = ({ item }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteFromCart(item));
-        toast.success("item deleted sucessfuly");
+        try {
+          dispatch(deleteFromCart(item, cartItems, totalPrice));
+          toast.success("item deleted sucessfuly");
+        } catch (error) {
+          toast.error(error);
+        }
       }
     });
   };
@@ -36,7 +41,10 @@ const CartItem = ({ item }) => {
     <div className="product">
       <div className="row">
         <div className="col-md-3">
-          <img className="img-fluid mx-auto d-block image" src={item.image.url} />
+          <img
+            className="img-fluid mx-auto d-block image"
+            src={item.image.url}
+          />
         </div>
         <div className="col-md-8">
           <div className="info">
@@ -59,11 +67,14 @@ const CartItem = ({ item }) => {
                   value={item.quantity}
                   className="form-control quantity-input"
                   onChange={(e) => {
-                      dispatch(updateQuantity(item._id, e.target.value));
-                    }
-                  }
+                    dispatch(
+                      updateQuantity(item._id, e.target.value, cartItems)
+                    );
+                  }}
                   onClick={(e) => {
-                    dispatch(updateQuantity(item._id, e.target.value));
+                    dispatch(
+                      updateQuantity(item._id, e.target.value, cartItems)
+                    );
                   }}
                   onKeyDown={handleKeyDown}
                 />

@@ -1,13 +1,22 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import StarRating from "../StarRating";
 import { addToCart } from "../../../actions/cartActions";
-
+import { toast } from "react-toastify";
 
 const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
+  const { cartItems, totalPrice } = useSelector((state) => state.cart);
+
+  const handleAddToCart = () => {
+    try {
+      dispatch(addToCart(product, cartItems, totalPrice));
+      toast.success("add to cart successfuly");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div
@@ -29,9 +38,7 @@ const ProductItem = ({ product }) => {
           </div>
           <button
             className="btn w-100 rounded my-2 btn-danger"
-            onClick={() => {
-              dispatch(addToCart(product));
-            }}
+            onClick={handleAddToCart}
           >
             Add to cart
           </button>
