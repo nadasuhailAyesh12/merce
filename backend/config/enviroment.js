@@ -19,6 +19,7 @@ const {
     MAIL_HOST,
     MAIL_PORT,
     STRIPE_SECRET_KEY,
+    STRIPE_API_KEY,
     FRONTEND_URL,
 } = process.env;
 
@@ -53,10 +54,10 @@ const config = {
         port: MAIL_PORT,
     },
     frontendURL: FRONTEND_URL,
-    // stripeConfig: {
-    //     api_secret: STRIPE_SECRET_KEY,
-    //     api_key: STRIPE_API_KEY,
-    // },
+    stripeConfig: {
+        api_secret: STRIPE_SECRET_KEY,
+        api_key: STRIPE_API_KEY,
+    },
 };
 
 module.exports = config;
