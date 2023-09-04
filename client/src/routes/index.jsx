@@ -8,6 +8,7 @@ import Register from "../components/auth/register";
 import ResetPassword from "../components/auth/resetPassword";
 import Profile from "../components/user/profile";
 import ProtectedRoute from "./protectedRoute";
+import Payment from "../components/cart/payment";
 
 const routes = [
   {
@@ -51,6 +52,14 @@ const routes = [
     element: (
       <ProtectedRoute>
         <Profile />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/payment",
+    element: (
+      <ProtectedRoute>
+        <Payment />
       </ProtectedRoute>
     ),
   },

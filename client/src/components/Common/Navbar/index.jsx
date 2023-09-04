@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <Navbar
       expand="lg"
-      className="bg-body-tertiary shadow p-3 mb-5 bg-white rounded "
+      className="bg-body-tertiary shadow p-3 mb-4 bg-white rounded "
     >
       <Container fluid>
         <Navbar.Brand href="/" style={{ fontSize: 32, color: "#fe7f9c" }}>

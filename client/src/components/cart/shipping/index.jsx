@@ -1,48 +1,43 @@
 import React from "react";
 import { countries } from "countries-list";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../Common/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { updateShippingInfo } from "../../../actions/cartActions";
 import CheckoutSteps from "../checkoutSteps";
-
 
 function Shipping() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { address, phoneNo, postalCode, city, country } = useSelector(
     (state) => state.cart.shippingInfo
-    );
-    const countriesList = Object.values(countries);
-    
+  );
+  const countriesList = Object.values(countries);
+
   const handleChange = (field, value) => {
     dispatch(updateShippingInfo({ [field]: value }));
-    };
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        navigate('/confirm')
-}
-    
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate("/confirm");
+  };
+
   return (
     <>
-          <Navbar />
-          < CheckoutSteps shipping/>
-          
-      <div
-        className="d-flex justify-content-center align-items-center"
-      >
+      <CheckoutSteps shipping />
+
+      <div className="d-flex justify-content-center align-items-center">
         <form
           className="border shadow p-3 rounded mt-3px"
           method="post"
-                  style={{ width: 450 }}
-                  onSubmit={handleSubmit}
+          style={{ width: 450 }}
+          onSubmit={handleSubmit}
         >
           <h1 className="text-center p-3" style={{ color: "#fc4c4e" }}>
             SHIPPING
           </h1>
           <div className="mb-3">
-            <label htmlFor="address" className="form-label">
+            <label htmlFor="address" className="form-label fs-5">
               Address
             </label>
             <input
@@ -55,7 +50,7 @@ function Shipping() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="city" className="form-label">
+            <label htmlFor="city" className="form-label fs-5">
               City
             </label>
             <input
@@ -68,7 +63,7 @@ function Shipping() {
             />
           </div>
           <div className="mb-1">
-            <label className="form-label">Select country:</label>
+            <label className="form-label fs-5">Select country:</label>
           </div>
           <select
             onChange={(e) => handleChange("country", e.target.value)}
@@ -82,7 +77,7 @@ function Shipping() {
             ))}
           </select>
           <div className="mb-4">
-            <label htmlFor="postalCode" className="form-label">
+            <label htmlFor="postalCode" className="form-label fs-5">
               Postal Code
             </label>
             <input
@@ -95,7 +90,7 @@ function Shipping() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="phoneNo" className="form-label">
+            <label htmlFor="phoneNo" className="form-label fs-5">
               Phone No
             </label>
             <input
@@ -107,7 +102,10 @@ function Shipping() {
               onChange={(e) => handleChange("phoneNo", e.target.value)}
             />
           </div>
-          <button type="submit" className="btn w-100 rounded my-2 checkout_btn">
+          <button
+            type="submit"
+            className="btn btn-danger btn-lg btn-block btn w-100 rounded my-2"
+          >
             Continue
           </button>
         </form>
