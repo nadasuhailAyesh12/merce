@@ -3,8 +3,9 @@ import axios from "../../../api/axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Payment from "./paymentForm";
+import { toast } from "react-toastify";
 
-const StripeWrapper = () => {
+const StripeWrapper=()=> {
   const [stripeAPIKey, setStripeApiKey] = useState("");
 
   useEffect(() => {
@@ -13,21 +14,22 @@ const StripeWrapper = () => {
         const { data } = await axios.get("/payment/APIKey");
         setStripeApiKey(data.stripeAPIKey);
       } catch (error) {
-        console.error("Error fetching Stripe API key:", error);
+       toast.error('error while fetching')
       }
     }
+
     getStripeApiKey();
   }, []);
 
   return (
     <>
       {stripeAPIKey && (
-        <Elements stripe={loadStripe(stripeAPIKey)}>
+        <Elements stripe={loadStripe(stripeAPIKey)} >
           <Payment />
         </Elements>
       )}
     </>
   );
-};
+}
 
 export default StripeWrapper;

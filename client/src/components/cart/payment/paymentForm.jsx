@@ -47,8 +47,11 @@ const Payment = () => {
     e.preventDefault();
     try {
       await elements.submit();
-      const res = await axios.post("/payment/process", { amount: 500 });
-      const client_secret = res.data.client_secret;
+      const client_secret = (
+        await axios.post("/payment/process", {
+          amount: Math.round(totalPrice * 100),
+        })
+      ).data.client_secret;
       const result = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
