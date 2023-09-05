@@ -6,7 +6,7 @@ const initialState = {
     shippingInfo: {
         address: "",
         city: "",
-        phoneNo: "",
+        phoneNumber: "",
         postalcode: "",
         country: "",
     },

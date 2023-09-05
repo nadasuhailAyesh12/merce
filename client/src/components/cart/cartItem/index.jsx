@@ -41,10 +41,7 @@ const CartItem = ({ item }) => {
     <div className="product">
       <div className="row">
         <div className="col-md-3">
-          <img
-            className="img-fluid mx-auto d-block image"
-            src={item.image.url}
-          />
+          <img className="img-fluid mx-auto d-block image" src={item.image} />
         </div>
         <div className="col-md-8">
           <div className="info">

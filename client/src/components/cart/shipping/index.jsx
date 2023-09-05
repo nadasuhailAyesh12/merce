@@ -8,7 +8,7 @@ import CheckoutSteps from "../checkoutSteps";
 function Shipping() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { address, phoneNo, postalCode, city, country } = useSelector(
+  const { address, phoneNumber, postalCode, city, country } = useSelector(
     (state) => state.cart.shippingInfo
   );
   const countriesList = Object.values(countries);
@@ -95,11 +95,11 @@ function Shipping() {
             </label>
             <input
               type="text"
-              name="phoneNo"
+              name="phoneNumber"
               className="form-control"
-              id="phoneNo"
-              value={phoneNo}
-              onChange={(e) => handleChange("phoneNo", e.target.value)}
+              id="phoneNumber"
+              value={phoneNumber}
+              onChange={(e) => handleChange("phoneNumber", e.target.value)}
             />
           </div>
           <button

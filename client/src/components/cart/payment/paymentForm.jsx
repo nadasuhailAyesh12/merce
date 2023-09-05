@@ -8,13 +8,14 @@ import {
 import React, { useState } from "react";
 import CheckoutSteps from "../checkoutSteps";
 import axios from "../../../api/axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../Common/loader";
 import { useNavigate } from "react-router-dom";
+import { createOrder } from "../../../actions/orderActions";
 
 const Payment = () => {
-  const navigate = useNavigate("/success");
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
   const [validationErrors, SetValidationErrors] = useState({
@@ -23,6 +24,8 @@ const Payment = () => {
     cardCvc: null,
   });
   const { user } = useSelector((state) => state.auth);
+  const { totalPrice, subTotal, tax, shippingCost, cartItems, shippingInfo } =
+    useSelector((state) => state.cart);
   const options = {
     style: {
       base: {
@@ -30,6 +33,7 @@ const Payment = () => {
       },
     },
   };
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { complete, error } = e;
@@ -55,18 +59,27 @@ const Payment = () => {
         },
       });
       if (result.paymentIntent.status === "succeeded") {
-        toast.success("payment successful");
+        const message = await dispatch(
+          createOrder({
+            tax,
+            totalPrice,
+            subTotal,
+            shippingCost,
+            shippingInfo,
+            orderItems: cartItems,
+            paymentInfo: {
+              id: result.paymentIntent.id,
+              status: result.paymentIntent.status,
+            },
+          })
+        );
+        toast.success(message);
+        navigate("/success");
       } else if (result.paymentIntent.status === "failed") {
         toast.error("Payment failed for some reasons!");
       }
     } catch (error) {
-      if (error.type === "card_error") {
-        toast.error("Card error. Please check your card details.");
-      } else if (error.type === "api_error") {
-        toast.error("Payment processing error. Please try again later.");
-      } else {
-        toast.error("An unexpected error occurred.");
-      }
+      toast.error(error);
     }
   };
 

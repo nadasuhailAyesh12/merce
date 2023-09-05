@@ -50,7 +50,7 @@ const ConfirmOrder = () => {
               <div className="row">
                 <div className="col-4 col-lg-2 image">
                   <img
-                    src={item.image.url}
+                    src={item.image}
                     alt="item image"
                     height="60"
                     width="80"

@@ -20,7 +20,13 @@ export const addToCart = (product, cartItems, totalPrice) => {
     if (productCount >= 1) {
         throw new Error("Product already exists at cart");
     } else {
-        updatedCartItems.push(product);
+        updatedCartItems.push({
+            name: product.name,
+            image: product.image.url,
+            price: product.price,
+            quantity: product.quantity,
+            product: product._id,
+        });
     }
     return {
         type: "ADD_TO_CART",
