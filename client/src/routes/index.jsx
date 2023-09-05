@@ -8,7 +8,7 @@ import Register from "../components/auth/register";
 import ResetPassword from "../components/auth/resetPassword";
 import Profile from "../components/user/profile";
 import ProtectedRoute from "./protectedRoute";
-import Payment from "../components/cart/payment";
+import StripeWrapper from "../components/cart/payment/stripeWrapper";
 
 const routes = [
   {
@@ -59,7 +59,7 @@ const routes = [
     path: "/payment",
     element: (
       <ProtectedRoute>
-        <Payment />
+        <StripeWrapper />
       </ProtectedRoute>
     ),
   },
