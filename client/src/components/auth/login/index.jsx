@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import Navbar from "../../Common/Navbar";
 import ForgetPassword from "../forgetPasswordModal";
+import { createOrder } from "../../../actions/orderActions";
 
 const Login = () => {
   const [showModal, setShowModal] = useState(false);
@@ -32,8 +32,26 @@ const Login = () => {
       const intendedDestination = sessionStorage.getItem("intendedDestination");
       sessionStorage.removeItem("intendedDestination");
       const successMessage = await dispatch(login(data.email, data.password));
+      const guestOrderInfo = JSON.parse(
+        sessionStorage.getItem("guestOrderInfo")
+      );
+      // transfer claim orders to reall ones if they decide to be authUsers
+      if (guestOrderInfo) {
+        await dispatch(
+          createOrder({
+            tax: guestOrderInfo.tax,
+            totalPrice: guestOrderInfo.totalPrice,
+            subTotal: guestOrderInfo.subTotal,
+            shippingCost: guestOrderInfo.shippingCost,
+            shippingInfo: guestOrderInfo.shippingInfo,
+            paymentInfo: guestOrderInfo.paymentInfo,
+          })
+        );
+        sessionStorage.removeItem("guestOrderInfo");
+      }
+
       toast.success(successMessage);
-      navigate(intendedDestination || "/");
+      navigate(intendedDestination || "/me");
     } catch (error) {
       toast.error(error || "An error occured");
     }

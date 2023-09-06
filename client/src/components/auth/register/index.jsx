@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import Navbar from "../../Common/Navbar";
 import "./style.css";
+import { createOrder } from "../../../actions/orderActions";
 
 const Register = () => {
   const { nonInputErrors } = useSelector((state) => state.auth);
@@ -47,13 +48,29 @@ const Register = () => {
       userData.append("name", data.name);
       userData.append("email", data.email);
       userData.set("password", data.password);
-      userData.set("avatar", data.avatar);
-      console.log(data.avatar);
+      if (data.avatar) {
+        userData.set("avatar", data.avatar);
+      }
       await dispatch(signup(userData));
-      console.log(userData);
+      const guestOrderInfo = JSON.parse(
+        sessionStorage.getItem("guestOrderInfo")
+      );
+      // transfer claim orders to reall ones if they decide to be authUsers
+      if (guestOrderInfo) {
+        await dispatch(
+          createOrder({
+            tax: guestOrderInfo.tax,
+            totalPrice: guestOrderInfo.totalPrice,
+            subTotal: guestOrderInfo.subTotal,
+            shippingCost: guestOrderInfo.shippingCost,
+            shippingInfo: guestOrderInfo.shippingInfo,
+            paymentInfo: guestOrderInfo.paymentInfo,
+          })
+        );
+        sessionStorage.removeItem("guestOrderInfo");
+      }
       toast.success("register sucessfuly");
-           navigate('/me')
-      //todo redirect issue will implemented later
+      navigate("/me");
     } catch (error) {
       toast.error(error || "An error occured");
     }
