@@ -9,6 +9,7 @@ import ResetPassword from "../components/auth/resetPassword";
 import Profile from "../components/user/profile";
 import ProtectedRoute from "./protectedRoute";
 import StripeWrapper from "../components/cart/payment/stripeWrapper";
+import OrderSuccess from "../components/cart/orderSuccess";
 
 const routes = [
   {
@@ -76,6 +77,10 @@ const routes = [
     path: "/guestCheckout/payment",
     element: <StripeWrapper />,
   },
+    {
+    path: "/success",
+    element: <OrderSuccess />,
+  }
 ];
 
 export default routes;
