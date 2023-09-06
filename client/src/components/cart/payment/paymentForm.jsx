@@ -22,6 +22,8 @@ const Payment = () => {
     cardNumber: null,
     cardExpiry: null,
     cardCvc: null,
+    guestName: null,
+    guestEmail: null,
   });
   const { user } = useSelector((state) => state.auth);
   const { totalPrice, subTotal, tax, shippingCost, cartItems, shippingInfo } =
@@ -33,9 +35,27 @@ const Payment = () => {
       },
     },
   };
+  const [guestUserName, setGuestUserName] = useState("");
+  const [guestUserEmail, setGuestUserEmail] = useState("");
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
+  const validateGuestUserInputs = (e) => {
+    if (!e.target.value) {
+      SetValidationErrors({
+        ...validationErrors,
+        [e.target.name]: `${e.target.name} is required`,
+      });
+    } else if (e.target.name === "guestEmail") {
+      const emailPattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+      !emailPattern.test(e.target.value) &&
+        SetValidationErrors({
+          ...validationErrors,
+          guestEmail: "not valid email",
+        });
+    }
+  };
+
+  const handlePaymentElementsChange = (e) => {
     const { complete, error } = e;
     SetValidationErrors({
       ...validationErrors,
@@ -47,6 +67,7 @@ const Payment = () => {
     e.preventDefault();
     try {
       await elements.submit();
+      //payment processing
       const client_secret = (
         await axios.post("/payment/process", {
           amount: Math.round(totalPrice * 100),
@@ -56,28 +77,38 @@ const Payment = () => {
         payment_method: {
           card: elements.getElement(CardNumberElement),
           billing_details: {
-            name: user.name,
-            email: user.email,
+            name: user ? user.name : guestUserName,
+            email: user ? user.email : guestUserEmail,
           },
         },
       });
+
       if (result.paymentIntent.status === "succeeded") {
-        const message = await dispatch(
-          createOrder({
-            tax,
-            totalPrice,
-            subTotal,
-            shippingCost,
-            shippingInfo,
-            orderItems: cartItems,
-            paymentInfo: {
-              id: result.paymentIntent.id,
-              status: result.paymentIntent.status,
-            },
-          })
-        );
-        toast.success(message);
-        navigate("/success");
+        const order = {
+          tax,
+          totalPrice,
+          subTotal,
+          shippingCost,
+          shippingInfo,
+          orderItems: cartItems,
+          paymentInfo: {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status,
+          },
+        };
+
+        //creating order for auth users
+        if (user) {
+          const message = await dispatch(createOrder(order));
+          toast.success(message);
+          navigate("/success");
+        }
+        //creating claim order info for guest users
+        else {
+          sessionStorage.setItem("guestOrderInfo", JSON.stringify(order));
+          toast.success("payment sucess");
+          navigate("/success");
+        }
       } else if (result.paymentIntent.status === "failed") {
         toast.error("Payment failed for some reasons!");
       }
@@ -102,25 +133,88 @@ const Payment = () => {
             <h1 className="text-center p-3" style={{ color: "#fc4c4e" }}>
               Card Info
             </h1>
+            {/* for just guest users */}
+            {!user && (
+              <>
+                <div className="form-group mb-4 ">
+                  <label htmlFor="guestName" className="form-label fs-5">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    name="guestName"
+                    id="guestName"
+                    aria-label="guest name"
+                    onChange={(e) => {
+                      SetValidationErrors({
+                        ...validationErrors,
+                        [e.target.name]: null,
+                      });
+                      validateGuestUserInputs(e);
+                      {
+                        !validationErrors.guestName &&
+                          setGuestUserName(e.target.value);
+                      }
+                    }}
+                    className={
+                      validationErrors.guestName
+                        ? "form-control is-invalid"
+                        : "form-control"
+                    }
+                  />
+                  {validationErrors.guestName && (
+                    <p className="text-danger">{validationErrors.guestName}</p>
+                  )}
+                </div>
+                <div className="form-group mb-4 ">
+                  <label htmlFor="guestEmail" className="form-label fs-5">
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    name="guestEmail"
+                    id="guestEmail"
+                    aria-label="guest email"
+                    onChange={(e) => {
+                      SetValidationErrors({
+                        ...validationErrors,
+                        [e.target.name]: null,
+                      });
+                      validateGuestUserInputs(e);
+                      {
+                        !validationErrors.guestEmail &&
+                          setGuestUserEmail(e.target.value);
+                      }
+                    }}
+                    className={
+                      validationErrors.guestEmail
+                        ? "form-control is-invalid"
+                        : "form-control"
+                    }
+                  />
+                  {validationErrors.guestEmail && (
+                    <p className="text-danger">{validationErrors.guestEmail}</p>
+                  )}
+                </div>
+              </>
+            )}
 
-            <div className="form-group mb-4 ">
-              <label htmlFor="cardNumber" className="form-label fs-5">
-                Card Number
-              </label>
-              <CardNumberElement
-                type="text"
-                name="cardNumber"
-                id="cardNumber"
-                aria-label="card number"
-                options={options}
-                onChange={handleChange}
-                className={
-                  validationErrors.cardCvc
-                    ? "form-control is-invalid"
-                    : "form-control"
-                }
-              />
-            </div>
+            <label htmlFor="cardNumber" className="form-label fs-5">
+              Card Number
+            </label>
+            <CardNumberElement
+              type="text"
+              name="cardNumber"
+              id="cardNumber"
+              aria-label="card number"
+              options={options}
+              onChange={handlePaymentElementsChange}
+              className={
+                validationErrors.cardCvc
+                  ? "form-control is-invalid"
+                  : "form-control"
+              }
+            />
             {validationErrors.cardNumber && (
               <p className="text-danger">
                 {validationErrors.cardNumber.message}
@@ -142,7 +236,7 @@ const Payment = () => {
                 id="cardExpiry"
                 aria-label="card expiry"
                 options={options}
-                onChange={handleChange}
+                onChange={handlePaymentElementsChange}
               />
             </div>
             {validationErrors.cardExpiry && (
@@ -166,7 +260,7 @@ const Payment = () => {
                 id="cardCvc"
                 aria-label="card cvc"
                 options={options}
-                onChange={handleChange}
+                onChange={handlePaymentElementsChange}
               />
             </div>
             {validationErrors.cardCvc && (

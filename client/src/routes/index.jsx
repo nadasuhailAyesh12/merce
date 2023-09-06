@@ -20,7 +20,7 @@ const routes = [
     element: <CartPage />,
   },
   {
-    path: "/shipping",
+    path: "/authCheckout/shipping",
     element: (
       <ProtectedRoute>
         <Shipping />
@@ -28,12 +28,21 @@ const routes = [
     ),
   },
   {
-    path: "/confirm",
+    path: "/guestCheckout/shipping",
+    element: <Shipping />,
+  },
+
+  {
+    path: "/authCheckout/confirm",
     element: (
       <ProtectedRoute>
         <ConfirmOrder />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/guestCheckout/confirm",
+    element: <ConfirmOrder />,
   },
   {
     path: "/login",
@@ -56,12 +65,16 @@ const routes = [
     ),
   },
   {
-    path: "/payment",
+    path: "/authCheckout/payment",
     element: (
       <ProtectedRoute>
         <StripeWrapper />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/guestCheckout/payment",
+    element: <StripeWrapper />,
   },
 ];
 

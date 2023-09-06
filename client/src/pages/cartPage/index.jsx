@@ -7,19 +7,19 @@ import CartList from "../../components/cart/cartList";
 import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
-  const navigate=useNavigate()
-  const { totalPrice, cartItems } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+  const { subTotal, cartItems } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <>
-    
       {/* ------------------------main  content------------------------*/}
       <section className="shopping-cart dark">
         <div className="container">
           <div className="block-heading">
             <h2>Shopping Cart</h2>
           </div>
-          {cartItems.length ?
+          {cartItems.length ? (
             <div className="content">
               <div className="row">
                 {/* ------------------------cartList section------------------------*/}
@@ -34,19 +34,32 @@ const CartPage = () => {
                     <h3>Summary</h3>
                     <div className="summary-item">
                       <span className="detail">Subtotal</span>
-                      <span className="price">{totalPrice}</span>
-                    </div>
-                    <div className="summary-item">
-                      <span className="detail">Total</span>
-                      <span className="price">{totalPrice}</span>
+                      <span className="price">{subTotal}</span>
                       <hr />
-                      <button className="btn w-100 rounded my-2 btn-danger"onClick={()=>navigate('/shipping')}>checkout</button>
+
+                      <button
+                        className="btn w-100 rounded my-2 btn-danger fs-5"
+                        onClick={() => navigate("/authcheckout/shipping")}
+                      >
+                        {!user ? "login to checkout" : "checkout"}
+                      </button>
+
+                      {!user && (
+                        <button
+                          className="btn w-100 rounded my-2 btn-primary fs-5"
+                          onClick={() => navigate("/guestcheckout/shipping")}
+                        >
+                          pay as aguest
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            : <h1 className='noItems'>No items at cart yet!</h1>}
+          ) : (
+            <h1 className="noItems">No items at cart yet!</h1>
+          )}
         </div>
       </section>
     </>

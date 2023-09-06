@@ -13,6 +13,7 @@ const Shipping = () => {
   const { address, phoneNumber, postalCode, city, country } = useSelector(
     (state) => state.cart.shippingInfo
   );
+  const { user } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -45,7 +46,10 @@ const Shipping = () => {
 
   const onSubmit = handleSubmit((data) => {
     dispatch(updateShippingInfo(data));
-    navigate("/confirm");
+    const navigatedURL = user
+      ? "/authCheckout/confirm"
+      : "/guestCheckout/confirm";
+    navigate(navigatedURL);
   });
 
   return (
