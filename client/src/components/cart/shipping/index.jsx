@@ -4,34 +4,59 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateShippingInfo } from "../../../actions/cartActions";
 import CheckoutSteps from "../checkoutSteps";
+import { useForm } from "react-hook-form";
+import { isValidPhoneNumber } from "libphonenumber-js";
 
-function Shipping() {
+const Shipping = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { address, phoneNumber, postalCode, city, country } = useSelector(
     (state) => state.cart.shippingInfo
   );
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      address,
+      phoneNumber,
+      postalCode,
+      city,
+      country,
+    },
+  });
   const countriesList = Object.values(countries);
 
-  const handleChange = (field, value) => {
-    dispatch(updateShippingInfo({ [field]: value }));
+  const validatePhoneNumber = (value) => {
+    if (!isValidPhoneNumber(value)) {
+      return "Invalid phoneNumber format";
+    }
+    setValue("phoneNumber", phoneNumber);
+    return true;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/confirm");
+  const handleChange = (e) => {
+    clearErrors(e.target.name);
+    setValue(e.target.name, e.target.value);
   };
+
+  const onSubmit = handleSubmit((data) => {
+    dispatch(updateShippingInfo(data));
+    navigate("/confirm");
+  });
 
   return (
     <>
       <CheckoutSteps shipping />
-
       <div className="d-flex justify-content-center align-items-center">
         <form
           className="border shadow p-3 rounded mt-3px"
           method="post"
           style={{ width: 450 }}
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
         >
           <h1 className="text-center p-3" style={{ color: "#fc4c4e" }}>
             SHIPPING
@@ -42,12 +67,19 @@ function Shipping() {
             </label>
             <input
               type="text"
-              className="form-control"
+              {...register("address", {
+                required: "Address is required",
+              })}
+              className={
+                errors.city ? "form-control  is-invalid" : "form-control"
+              }
               name="address"
               id="address"
-              onChange={(e) => handleChange("address", e.target.value)}
-              value={address}
+              onChange={handleChange}
             />
+            {errors.address && (
+              <p className="text-danger">{errors.address.message}</p>
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="city" className="form-label fs-5">
@@ -56,21 +88,27 @@ function Shipping() {
             <input
               type="text"
               name="city"
-              className="form-control"
+              className={
+                errors.city ? "form-control  is-invalid" : "form-control"
+              }
               id="city"
-              value={city}
-              onChange={(e) => handleChange("city", e.target.value)}
+              {...register("city", {
+                required: "City is required",
+              })}
+              onChange={handleChange}
             />
+            {errors.city && (
+              <p className="text-danger">{errors.city.message}</p>
+            )}
           </div>
           <div className="mb-1">
             <label className="form-label fs-5">Select country:</label>
           </div>
           <select
-            onChange={(e) => handleChange("country", e.target.value)}
+            onChange={handleChange}
             className="form-select mb-3"
-            name="role"
+            name="country"
             aria-label="Default select example"
-            value={country}
           >
             {countriesList.map((country) => (
               <option key={country.name}>{country.name}</option>
@@ -82,36 +120,54 @@ function Shipping() {
             </label>
             <input
               type="text"
+              {...register("postalCode", {
+                required: "Postal code is required",
+                pattern: {
+                  value: /^[0-9]{5}(?:-[0-9]{4})?$/,
+                  message: "Invalid postal code format",
+                },
+              })}
               name="postalCode"
-              className="form-control"
+              className={
+                errors.postalCode ? "form-control  is-invalid" : "form-control"
+              }
               id="postalCode "
-              value={postalCode}
-              onChange={(e) => handleChange("postalCode", e.target.value)}
+              onChange={handleChange}
             />
+            {errors.postalCode && (
+              <p className="text-danger">{errors.postalCode.message}</p>
+            )}
           </div>
           <div className="mb-4">
-            <label htmlFor="phoneNo" className="form-label fs-5">
-              Phone No
+            <label htmlFor="phoneNumber" className="form-label fs-5">
+              Phone Number
             </label>
             <input
               type="text"
+              {...register("phoneNumber", {
+                required: "phoneNumber is required ",
+                validate: validatePhoneNumber,
+              })}
               name="phoneNumber"
-              className="form-control"
+              className={
+                errors.phoneNumber ? "form-control  is-invalid" : "form-control"
+              }
               id="phoneNumber"
-              value={phoneNumber}
-              onChange={(e) => handleChange("phoneNumber", e.target.value)}
             />
+            {errors.phoneNumber && (
+              <p className="text-danger">{errors.phoneNumber.message}</p>
+            )}
           </div>
           <button
             type="submit"
             className="btn btn-danger btn-lg btn-block btn w-100 rounded my-2"
           >
-            Continue
+            continue
           </button>
         </form>
       </div>
     </>
   );
-}
+};
 
 export default Shipping;

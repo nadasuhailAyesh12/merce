@@ -41,10 +41,7 @@ const cartReducer = (state = initialState, action) => {
         case Cart_ACTIONS_CONSTANTS.UPDATE_SHIPPING_INFO:
             return {
                 ...state,
-                shippingInfo: {
-                    ...state.shippingInfo,
-                    ...action.payload,
-                },
+                shippingInfo: action.payload,
             };
         case Cart_ACTIONS_CONSTANTS.UPDATE_CART_TOTALS:
             return {

@@ -17,6 +17,7 @@
     "countries-list": "^2.6.1",
     "dotenv": "^16.3.1",
     "jquery": "^3.7.0",
+    "libphonenumber-js": "^1.10.44",
     "lodash": "^4.17.21",
     "mdb-react-ui-kit": "^6.2.0",
     "prop-types": "^15.8.1",
