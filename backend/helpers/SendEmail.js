@@ -15,7 +15,8 @@ const sendEmail = async (options) => {
         from: `${nodemailerConfig.name} <${nodemailerConfig.from}>`,
         to: options.email,
         subject: options.subject,
-        text: options.message
+        text: options.message,
+        html: options.html
     }
     await transporter.sendMail(message);
 }

@@ -68,9 +68,12 @@ const Register = () => {
           })
         );
         sessionStorage.removeItem("guestOrderInfo");
+        toast.success("register sucessfuly");
+        navigate("/orders/me");
+      } else {
+        toast.success("register sucessfuly");
+        navigate("/me");
       }
-      toast.success("register sucessfuly");
-      navigate("/me");
     } catch (error) {
       toast.error(error || "An error occured");
     }

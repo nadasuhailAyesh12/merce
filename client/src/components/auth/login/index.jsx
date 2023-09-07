@@ -48,10 +48,12 @@ const Login = () => {
           })
         );
         sessionStorage.removeItem("guestOrderInfo");
+        toast.success(successMessage);
+        navigate("/orders/me");
+      } else {
+        toast.success(successMessage);
+        navigate(intendedDestination || "/me");
       }
-
-      toast.success(successMessage);
-      navigate(intendedDestination || "/me");
     } catch (error) {
       toast.error(error || "An error occured");
     }

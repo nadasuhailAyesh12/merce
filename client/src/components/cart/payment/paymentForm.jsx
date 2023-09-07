@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { createOrder } from "../../../actions/orderActions";
 
 const Payment = () => {
+  const [isSending, setIsSending] = useState(false);
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
@@ -22,8 +23,6 @@ const Payment = () => {
     cardNumber: null,
     cardExpiry: null,
     cardCvc: null,
-    guestName: null,
-    guestEmail: null,
   });
   const { user } = useSelector((state) => state.auth);
   const { totalPrice, subTotal, tax, shippingCost, cartItems, shippingInfo } =
@@ -39,28 +38,24 @@ const Payment = () => {
   const [guestUserEmail, setGuestUserEmail] = useState("");
   const dispatch = useDispatch();
 
-  const validateGuestUserInputs = (e) => {
-    if (!e.target.value) {
-      SetValidationErrors({
-        ...validationErrors,
-        [e.target.name]: `${e.target.name} is required`,
-      });
-    } else if (e.target.name === "guestEmail") {
-      const emailPattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-      !emailPattern.test(e.target.value) &&
-        SetValidationErrors({
-          ...validationErrors,
-          guestEmail: "not valid email",
-        });
-    }
-  };
-
   const handlePaymentElementsChange = (e) => {
     const { complete, error } = e;
     SetValidationErrors({
       ...validationErrors,
       [e.elementType]: complete ? null : error,
     });
+  };
+
+  const sendOrderConfirmationEmail = async (emailData) => {
+    try {
+      setIsSending(true);
+      const response = await axios.post("/payment/sendEmail", emailData);
+      return response.data.message;
+    } catch (error) {
+      throw error; // give it to caller to handle it
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -73,6 +68,7 @@ const Payment = () => {
           amount: Math.round(totalPrice * 100),
         })
       ).data.client_secret;
+
       const result = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
@@ -96,19 +92,38 @@ const Payment = () => {
             status: result.paymentIntent.status,
           },
         };
-
-        //creating order for auth users
         if (user) {
-          const message = await dispatch(createOrder(order));
+          //create order for Authenticated user
+          const newOrder = await dispatch(createOrder(order));
+          // Authenticated user: Send order confirmation email
+          const emailDataForAuthenticatedUser = {
+            orderID: newOrder._id,
+            email: user.email,
+            orderDate: newOrder.createdAt,
+            orderItems: cartItems,
+            totalPrice,
+          };
+
+          const message = await sendOrderConfirmationEmail(
+            emailDataForAuthenticatedUser
+          );
           toast.success(message);
-          navigate("/success");
-        }
-        //creating claim order info for guest users
-        else {
+        } else {
+          // Guest user: Store  claim order info in session and send email
           sessionStorage.setItem("guestOrderInfo", JSON.stringify(order));
-          toast.success("payment sucess");
-          navigate("/success");
+          const emailDataForGuestUser = {
+            email: guestUserEmail,
+            orderDate: Date.now(),
+            orderItems: cartItems,
+            totalPrice,
+          };
+          const message = await sendOrderConfirmationEmail(
+            emailDataForGuestUser
+          );
+          toast.success(message);
         }
+
+        navigate("/success");
       } else if (result.paymentIntent.status === "failed") {
         toast.error("Payment failed for some reasons!");
       }
@@ -120,8 +135,11 @@ const Payment = () => {
   return (
     <>
       <CheckoutSteps shipping confirmOrder payment />
-      {!stripe || !elements ? (
-        <Loader />
+      {!stripe || !elements || isSending ? (
+        <>
+          <Loader />
+          {isSending && <h2 className="text-center"> Payment is processing</h2>}
+        </>
       ) : (
         <div className="d-flex justify-content-center align-items-center">
           <form
@@ -146,21 +164,10 @@ const Payment = () => {
                     id="guestName"
                     aria-label="guest name"
                     onChange={(e) => {
-                      SetValidationErrors({
-                        ...validationErrors,
-                        [e.target.name]: null,
-                      });
-                      validateGuestUserInputs(e);
-                      {
-                        !validationErrors.guestName &&
-                          setGuestUserName(e.target.value);
-                      }
+                      setGuestUserName(e.target.value);
                     }}
-                    className={
-                      validationErrors.guestName
-                        ? "form-control is-invalid"
-                        : "form-control"
-                    }
+                    className="form-control"
+                    required
                   />
                   {validationErrors.guestName && (
                     <p className="text-danger">{validationErrors.guestName}</p>
@@ -171,26 +178,15 @@ const Payment = () => {
                     Email
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     name="guestEmail"
                     id="guestEmail"
                     aria-label="guest email"
                     onChange={(e) => {
-                      SetValidationErrors({
-                        ...validationErrors,
-                        [e.target.name]: null,
-                      });
-                      validateGuestUserInputs(e);
-                      {
-                        !validationErrors.guestEmail &&
-                          setGuestUserEmail(e.target.value);
-                      }
+                      setGuestUserEmail(e.target.value);
                     }}
-                    className={
-                      validationErrors.guestEmail
-                        ? "form-control is-invalid"
-                        : "form-control"
-                    }
+                    className="form-control"
+                    required
                   />
                   {validationErrors.guestEmail && (
                     <p className="text-danger">{validationErrors.guestEmail}</p>
@@ -269,8 +265,9 @@ const Payment = () => {
             <button
               type="submit"
               className="btn btn-danger btn-lg btn-block btn w-100 rounded my-2"
+              disabled={isSending}
             >
-              pay
+              {isSending ? "submitting" : `pay ${totalPrice}$`}
             </button>
           </form>
         </div>
