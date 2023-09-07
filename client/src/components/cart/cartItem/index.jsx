@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { deleteFromCart, updateQuantity } from "../../../actions/cartActions";
@@ -6,7 +6,8 @@ import "./style.css";
 import { toast } from "react-toastify";
 
 const CartItem = ({ item }) => {
-  const { cartItems, totalPrice } = useSelector((state) => state.cart);
+  const [stockHintVisible, setStockHintVisible] = useState(false);
+  const { cartItems, subTotal } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const handleDelete = () => {
@@ -21,13 +22,22 @@ const CartItem = ({ item }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         try {
-          dispatch(deleteFromCart(item, cartItems, totalPrice));
+          dispatch(deleteFromCart(item, cartItems, subTotal));
           toast.success("item deleted sucessfuly");
         } catch (error) {
           toast.error(error);
         }
       }
     });
+  };
+  const handleUpdateQuantity = (e) => {
+    if (item.stock <= 10 || item.stock === 0) {
+      setStockHintVisible(true);
+      setTimeout(() => setStockHintVisible(false), 5000);
+    } else {
+      setStockHintVisible(false);
+    }
+    dispatch(updateQuantity(item.product, e.target.value, cartItems));
   };
 
   const handleKeyDown = (e) => {
@@ -40,13 +50,13 @@ const CartItem = ({ item }) => {
   return (
     <div className="product">
       <div className="row">
-        <div className="col-md-3">
+        <div className="col-md-4">
           <img className="img-fluid mx-auto d-block image" src={item.image} />
         </div>
         <div className="col-md-8">
           <div className="info">
             <div className="row">
-              <div className="col-md-5 product-name">
+              <div className="col-md-4 product-name">
                 <div className="product-name">
                   <span className="name">{item.name}</span>
                   <div className="product-info">
@@ -54,7 +64,7 @@ const CartItem = ({ item }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 quantity">
+              <div className="col-md-5 quantity">
                 <label htmlFor="quantity">Quantity:</label>
                 <input
                   id="quantity"
@@ -63,19 +73,20 @@ const CartItem = ({ item }) => {
                   max={item.stock}
                   value={item.quantity}
                   className="form-control quantity-input"
-                  onChange={(e) => {
-                    dispatch(
-                      updateQuantity(item._id, e.target.value, cartItems)
-                    );
-                  }}
-                  onClick={(e) => {
-                    dispatch(
-                      updateQuantity(item._id, e.target.value, cartItems)
-                    );
-                  }}
+                  onChange={handleUpdateQuantity}
+                  onClick={handleUpdateQuantity}
                   onKeyDown={handleKeyDown}
                 />
+                {stockHintVisible && (
+                  <span className=" text-danger">
+                    {" "}
+                    {item.stock === 0
+                      ? "out of stock"
+                      : "product stock is less than 10"}
+                  </span>
+                )}
               </div>
+
               <div className="col-md-3 price">
                 <span>{item.price}</span>
                 <span

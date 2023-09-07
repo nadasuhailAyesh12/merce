@@ -1,13 +1,13 @@
-export const deleteFromCart = (product, cartItems, totalPrice) => {
+export const deleteFromCart = (cartItem, cartItems, totalPrice) => {
     const filteredCartItems = cartItems.filter(
-        (item) => item._id !== product._id
+        (item) => item.product !== cartItem.product
     );
     return {
         type: "DELETE_FROM_CART",
         payload: {
-            product,
+            product: cartItem,
             cartItems: filteredCartItems,
-            price: totalPrice - product.quantity * product.price,
+            price: totalPrice - cartItem.quantity * cartItem.price,
         },
     };
 };
@@ -15,7 +15,7 @@ export const deleteFromCart = (product, cartItems, totalPrice) => {
 export const addToCart = (product, cartItems, totalPrice) => {
     const updatedCartItems = [...cartItems];
     const productCount = cartItems.filter(
-        (item) => item._id === product._id
+        (item) => item.product === product._id
     ).length;
     if (productCount >= 1) {
         throw new Error("Product already exists at cart");
@@ -26,6 +26,7 @@ export const addToCart = (product, cartItems, totalPrice) => {
             price: product.price,
             quantity: product.quantity,
             product: product._id,
+            stock: product.stock,
         });
     }
     return {
@@ -36,9 +37,9 @@ export const addToCart = (product, cartItems, totalPrice) => {
 
 export const updateQuantity = (id, quantity, cartItems) => {
     const updatedCartItems = cartItems.map((item) =>
-        item._id === id ? { ...item, quantity } : item
+        item.product === id ? { ...item, quantity } : item
     );
-    const totalPrice = cartItems.reduce(
+    const subTotal = cartItems.reduce(
         (total, item) => total + item.price * item.quantity,
         0
     );
@@ -49,7 +50,7 @@ export const updateQuantity = (id, quantity, cartItems) => {
             id,
             quantity,
             cartItems: updatedCartItems,
-            totalPrice,
+            subTotal,
         },
     };
 };

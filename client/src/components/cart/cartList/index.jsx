@@ -11,7 +11,7 @@ const CartList = () => {
       {cartItems.length ?
         
           cartItems.map((item) => (
-            <CartItem item={item} key={item} />
+            <CartItem item={item} key={item.product} />
           ))
         : <h1> No items at cart yet!</h1>}
     </>

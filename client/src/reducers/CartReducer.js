@@ -21,7 +21,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cartItems: action.payload.cartItems,
-                totalPrice: action.payload.price,
+                subTotal: action.payload.price,
             };
         }
 
@@ -29,14 +29,14 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cartItems: action.payload.cartItems,
-                totalPrice: action.payload.price,
+                subTotal: action.payload.price,
             };
 
         case Cart_ACTIONS_CONSTANTS.UPDATE_QUANTITY:
             return {
                 ...state,
                 cartItems: action.payload.cartItems,
-                totalPrice: action.payload.totalPrice,
+                subTotal: action.payload.subTotal,
             };
         case Cart_ACTIONS_CONSTANTS.UPDATE_SHIPPING_INFO:
             return {

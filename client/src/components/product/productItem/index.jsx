@@ -7,11 +7,11 @@ import { toast } from "react-toastify";
 
 const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
-  const { cartItems, totalPrice } = useSelector((state) => state.cart);
+  const { cartItems, subTotal } = useSelector((state) => state.cart);
 
   const handleAddToCart = () => {
     try {
-      dispatch(addToCart(product, cartItems, totalPrice));
+      dispatch(addToCart(product, cartItems, subTotal));
       toast.success("add to cart successfuly");
     } catch (error) {
       toast.error(error.message);
