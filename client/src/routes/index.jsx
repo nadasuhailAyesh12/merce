@@ -11,6 +11,7 @@ import ProtectedRoute from "./protectedRoute";
 import StripeWrapper from "../components/cart/payment/stripeWrapper";
 import OrderSuccess from "../components/cart/orderSuccess";
 import OrdersList from "../components/order/orderList";
+import OrderDetails from "../components/order/orderDetails";
 
 const routes = [
   {
@@ -87,6 +88,14 @@ const routes = [
     element: (
       <ProtectedRoute>
         <OrdersList />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/order/:id",
+    element: (
+      <ProtectedRoute>
+        <OrderDetails />
       </ProtectedRoute>
     ),
   },

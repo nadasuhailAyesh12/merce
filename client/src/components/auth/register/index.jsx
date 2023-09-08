@@ -65,6 +65,7 @@ const Register = () => {
             shippingCost: guestOrderInfo.shippingCost,
             shippingInfo: guestOrderInfo.shippingInfo,
             paymentInfo: guestOrderInfo.paymentInfo,
+            orderItems: guestOrderInfo.orderItems,
           })
         );
         sessionStorage.removeItem("guestOrderInfo");

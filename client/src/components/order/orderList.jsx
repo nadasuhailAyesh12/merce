@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoginUserOrders } from "../../../actions/orderActions";
+import { getLoginUserOrders } from "../../actions/orderActions";
 import { MDBDataTable as OrdersTable } from "mdbreact";
-import Loader from "../../Common/loader";
+import Loader from "../Common/loader";
 import { Link } from "react-router-dom";
 import { AiFillEye } from "react-icons/ai";
 
