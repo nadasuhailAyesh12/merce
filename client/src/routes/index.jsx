@@ -10,6 +10,7 @@ import Profile from "../components/user/profile";
 import ProtectedRoute from "./protectedRoute";
 import StripeWrapper from "../components/cart/payment/stripeWrapper";
 import OrderSuccess from "../components/cart/orderSuccess";
+import OrdersList from "../components/order/orderList";
 
 const routes = [
   {
@@ -77,10 +78,18 @@ const routes = [
     path: "/guestCheckout/payment",
     element: <StripeWrapper />,
   },
-    {
+  {
     path: "/success",
     element: <OrderSuccess />,
-  }
+  },
+  {
+    path: "/orders/me",
+    element: (
+      <ProtectedRoute>
+        <OrdersList />
+      </ProtectedRoute>
+    ),
+  },
 ];
 
 export default routes;
