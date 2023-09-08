@@ -1,24 +1,31 @@
 const initialState = {
     order: null,
+    orders: [],
     loading: false,
 };
 
 const orderReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "orderAPI_REQUEST":
+        case "ORDERAPI_REQUEST":
             return {
                 ...state,
                 loading: true,
             };
-        case "orderAPI_FAILURE":
+        case "ORDERAPI_FAILURE":
             return {
                 ...state,
                 loading: false,
             };
-        case "orderAPI_SUCCESS":
+        case "CREATEORDER_SUCCESS":
             return {
                 ...state,
                 order: action.payload,
+                loading: false,
+            };
+        case "GETlOGINUSERORDERS_SUCCESS":
+            return {
+                ...state,
+                orders: action.payload,
                 loading: false,
             };
         default:
