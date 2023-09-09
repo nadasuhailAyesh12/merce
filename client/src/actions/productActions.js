@@ -1,4 +1,5 @@
 import getProducts from "../api/product";
+import axios from "../api/axios";
 
 export const setFilterOption = (category) => {
     return {
@@ -48,3 +49,17 @@ export const updateFilteredProducts =
                 throw error; // throw it to product page to handle it
             }
         };
+
+export const getProductDetails = (productID) => async (dispatch) => {
+    try {
+        dispatch({ type: "PRODUCT_API_REQUEST" });
+        const response = await axios.get(`/product/${productID}`);
+        dispatch({
+            type: "getProductDetails_SUCCESS",
+            payload: response.data.product,
+        });
+    } catch (error) {
+        dispatch({ type: "PRODUCT_API_FAILURE", payload: error });
+        throw error; // throw it to product page to handle it
+    }
+};

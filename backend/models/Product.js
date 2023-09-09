@@ -109,20 +109,21 @@ const productSchema = new mongoose.Schema({
         ref: 'User',
         // required: true,
     },
-    image:
-    {
-        public_id: {
-            type: String,
-            required: true,
-            default: '0'
-        },
-        url: {
-            type: String,
-            required: true,
-            default: 'https://media.istockphoto.com/id/1253169835/photo/abstract-geometric-shape-cylinder-and-torus-design-for-cosmetic-or-product-display-podium-3d.jpg?s=2048x2048&w=is&k=20&c=YsgoVKlqVWlUgIez4L8EW95SEX6w-8va9BIwJUg0eCM='
+    images:
+        [{
+            public_id: {
+                type: String,
+                required: true,
+                default: '0'
+            },
+            url: {
+                type: String,
+                required: true,
+                default: 'https://media.istockphoto.com/id/1253169835/photo/abstract-geometric-shape-cylinder-and-torus-design-for-cosmetic-or-product-display-podium-3d.jpg?s=2048x2048&w=is&k=20&c=YsgoVKlqVWlUgIez4L8EW95SEX6w-8va9BIwJUg0eCM='
 
-        },
-    }
+            },
+        }
+        ]
 
 },
     {

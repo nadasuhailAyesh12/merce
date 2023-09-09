@@ -3,9 +3,10 @@
     padding: 10px;
    
 }
-.card{
+.card img{
        cursor: pointer;
 }
+
 select{
     color: #fc4c4e;
 }

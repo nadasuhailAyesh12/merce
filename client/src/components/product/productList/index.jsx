@@ -19,7 +19,7 @@ const ProductList = () => {
           />
         ) : (
           products.map((product) => (
-            <ProductItem key={product._id} product={product} />
+            <ProductItem key={product._id} product={product}  />
           ))
         )}
       </div>

@@ -1,11 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
-import StarRating from "../StarRating";
+import StarRating from "../starRating";
 import { addToCart } from "../../../actions/cartActions";
 import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductItem = ({ product }) => {
+  const navigate=useNavigate()
   const dispatch = useDispatch();
   const { cartItems, subTotal } = useSelector((state) => state.cart);
 
@@ -19,19 +21,23 @@ const ProductItem = ({ product }) => {
   };
 
   return (
+
     <div
-      key={product.id}
       className="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1"
+      
     >
-      <div className="card">
-        <img className="card-img-top" src={product.image.url} />
+      <div className="card" >
+        <img className="card-img-top" src={product.images[0].url} onClick={()=>navigate(`/products/${product._id}`)}/>
         <div className="card-body">
           <h5>
-            <b>{product.name}</b>
+          
+                 <Link to={`/products/${product._id}`}>  <b>{product.name}</b></Link>
+            
+    
           </h5>
           <div className="d-flex flex-row my-2 ">
             <div className=" d-flex flex-column justify-content-lg-start mb-1000">
-              <StarRating rating={product.ratings} />
+              <StarRating rating={product.rating} />
               <span>{product.price}/piece</span>
             </div>
             <div className="ml-auto"></div>
@@ -45,6 +51,7 @@ const ProductItem = ({ product }) => {
         </div>
       </div>
     </div>
+    
   );
 };
 

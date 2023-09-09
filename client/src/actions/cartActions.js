@@ -22,7 +22,7 @@ export const addToCart = (product, cartItems, totalPrice) => {
     } else {
         updatedCartItems.push({
             name: product.name,
-            image: product.image.url,
+            image: product.images[0].url,
             price: product.price,
             quantity: product.quantity,
             product: product._id,
