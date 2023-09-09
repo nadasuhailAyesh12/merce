@@ -22,8 +22,20 @@ const addProductReview = CatchAsyncErrors(async (req, res) => {
     });
 });
 
+const getProductReviews = CatchAsyncErrors(async (req, res) => {
+    const { id } = req.params;
+
+    const reviews = await productService.getProductReviews(id);
+
+    res.status(200).json({
+        success: true,
+        reviews,
+    });
+});
+
 const reviewController = {
     addProductReview,
+    getProductReviews,
 };
 
 module.exports = reviewController;

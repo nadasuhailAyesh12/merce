@@ -58,8 +58,7 @@ const addProductReview = async (options, productID) => {
         product.reviews.push({
             ...options,
         });
-    }
-    else {
+    } else {
         product.reviews = product.reviews.map((review) =>
             review.user.toString() === options.user.toString()
                 ? { ...review, comment: options.comment, rating: options.rating }
@@ -76,6 +75,11 @@ const addProductReview = async (options, productID) => {
     return product.reviews;
 };
 
+const getProductReviews = async (productID) => {
+    const product = await getSingleProduct(productID);
+    return product.reviews;
+};
+
 const productService = {
     createProduct,
     getProducts,
@@ -83,6 +87,7 @@ const productService = {
     updateProduct,
     deleteProduct,
     addProductReview,
+    getProductReviews,
 };
 
 module.exports = productService;
