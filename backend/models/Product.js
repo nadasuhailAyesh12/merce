@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
         maxlength: [5, "product  price can’t exceed 5 characters"],
         default: 0.0,
     },
-    ratings: {
+    rating: {
         type: Number,
         required: [true, "please enter a rating"],
     },

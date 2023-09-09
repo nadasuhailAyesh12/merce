@@ -47,12 +47,42 @@ const deleteProduct = async (id) => {
     await productRepository.deleteProduct(id);
 };
 
+const addProductReview = async (options, productID) => {
+    const product = await getSingleProduct(productID);
+
+    const hasReviewed = product.reviews.find(
+        (review) => review.user.toString() === options.user.toString()
+    );
+
+    if (!hasReviewed) {
+        product.reviews.push({
+            ...options,
+        });
+    }
+    else {
+        product.reviews = product.reviews.map((review) =>
+            review.user.toString() === options.user.toString()
+                ? { ...review, comment: options.comment, rating: options.rating }
+                : review
+        );
+    }
+
+    product.rating =
+        product.reviews.reduce((acc, review) => acc + review.rating, 0) /
+        product.reviews.length;
+    product.numOfReviews = product.reviews.length;
+
+    await product.save({ validateBeforeSave: false });
+    return product.reviews;
+};
+
 const productService = {
     createProduct,
     getProducts,
     getSingleProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    addProductReview,
 };
 
 module.exports = productService;
