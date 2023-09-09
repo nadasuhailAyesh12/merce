@@ -23,9 +23,20 @@ const addProductReview = CatchAsyncErrors(async (req, res) => {
 });
 
 const getProductReviews = CatchAsyncErrors(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.query;
 
     const reviews = await productService.getProductReviews(id);
+
+    res.status(200).json({
+        success: true,
+        reviews,
+    });
+});
+
+const deleteProductReview = CatchAsyncErrors(async (req, res) => {
+    const { id, productID } = req.query;
+
+    const reviews = await productService.deleteProductReview(productID, id);
 
     res.status(200).json({
         success: true,
@@ -36,6 +47,7 @@ const getProductReviews = CatchAsyncErrors(async (req, res) => {
 const reviewController = {
     addProductReview,
     getProductReviews,
+    deleteProductReview,
 };
 
 module.exports = reviewController;

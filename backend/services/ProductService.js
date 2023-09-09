@@ -80,6 +80,21 @@ const getProductReviews = async (productID) => {
     return product.reviews;
 };
 
+const deleteProductReview = async (productID, reviewID) => {
+    const product = await getSingleProduct(productID);
+    product.reviews = product.reviews.filter(
+        (review) => review._id.toString() !== reviewID
+    );
+    product.rating =
+        product.reviews.length < 1
+            ? 1
+            : product.reviews.reduce((acc, review) => acc + review.rating, 0) /
+            product.reviews.length;
+    product.numOfReviews = product.reviews.length;
+    await product.save({ validateBeforeSave: false });
+    return product.reviews;
+};
+
 const productService = {
     createProduct,
     getProducts,
@@ -88,6 +103,7 @@ const productService = {
     deleteProduct,
     addProductReview,
     getProductReviews,
+    deleteProductReview,
 };
 
 module.exports = productService;
