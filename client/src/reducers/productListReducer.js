@@ -9,9 +9,10 @@ const initialState = {
     loading: false,
     error: null,
     product: null,
+    loadingProductDetails: false,
 };
 
-const productReducer = (state = initialState, action) => {
+const productListReducer = (state = initialState, action) => {
     switch (action.type) {
         case PRODUCTS_ACTIONS_CONSTANTS.SET_SEARCH_QUERY:
             return {
@@ -60,11 +61,21 @@ const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 product: action.payload,
-                loading: false,
+                loadingProductDetails: false,
+            };
+        case "getProductDetails_REQUEST":
+            return {
+                ...state,
+                loadingProductDetails: true,
+            };
+        case "getProductDetails_FAILURE":
+            return {
+                ...state,
+                loadingProductDetails: false,
             };
         default:
             return state;
     }
 };
 
-export default productReducer;
+export default productListReducer;
