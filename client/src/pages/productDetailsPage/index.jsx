@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import Loader from "../../components/Common/loader";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getProductDetails } from "../../actions/productActions";
 import { Carousel } from "react-bootstrap";
 import StarRating from "../../components/product/starRating";
 import { addToCart } from "../../actions/cartActions";
 import { toast } from "react-toastify";
+import SubmitReviewModal from "../../components/product/ProductReviewModal";
+
 
 const ProductDetails = () => {
+  const[showSubmitReviewModal,setShowSubimtReviewModal]=useState(false)
   const { cartItems, subTotal } = useSelector((state) => state.cart);
   const user = useSelector((state) => state.auth);
   const { id } = useParams();
@@ -79,21 +82,18 @@ const ProductDetails = () => {
             <p className=" fs-5 mb-1">
               Sold by: <strong>{product.seller}</strong>
             </p>
-
-            {user ? (
               <button
                 type="button"
                 className="btn btn-danger mt-4 fs-5"
                 data-toggle="modal"
-                data-target="#ratingModal"
+                  data-target="#ratingModal"
+                onClick={() => setShowSubimtReviewModal(true)}
+                
               >
-                Submit Your Review
-              </button>
-            ) : (
-              <div className="alert alert-danger mt-5" type="alert">
-                Login to post your review.
-              </div>
-            )}
+                {user ? ' Submit Your Review' : 'login to submit your review'}
+          </button>
+              <SubmitReviewModal show={showSubmitReviewModal} onClose={() => setShowSubimtReviewModal(false)} />
+             
           </div>
         </div>
       )}
