@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { addProductReview } from "../../../actions/ReviewActions";
+import { addProductReview } from "../../actions/ReviewActions";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Modal } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
+import { getProductDetails } from "../../actions/productActions";
 
 const SubmitReviewModal = ({ show, onClose }) => {
   const [rating, setRating] = useState(0);
@@ -47,6 +48,7 @@ const SubmitReviewModal = ({ show, onClose }) => {
           id
         )
       );
+      await dispatch(getProductDetails(id));
       toast.success("Review submitted successfully");
       onClose();
     } catch (error) {

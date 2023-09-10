@@ -8,8 +8,6 @@ const initialState = {
     currentPage: 1,
     loading: false,
     error: null,
-    product: null,
-    loadingProductDetails: false,
 };
 
 const productListReducer = (state = initialState, action) => {
@@ -57,22 +55,7 @@ const productListReducer = (state = initialState, action) => {
                 loading: true,
                 error: null,
             };
-        case "getProductDetails_SUCCESS":
-            return {
-                ...state,
-                product: action.payload,
-                loadingProductDetails: false,
-            };
-        case "getProductDetails_REQUEST":
-            return {
-                ...state,
-                loadingProductDetails: true,
-            };
-        case "getProductDetails_FAILURE":
-            return {
-                ...state,
-                loadingProductDetails: false,
-            };
+
         default:
             return state;
     }

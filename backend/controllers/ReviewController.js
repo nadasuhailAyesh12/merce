@@ -4,7 +4,8 @@ const productService = require("../services/ProductService");
 const addProductReview = CatchAsyncErrors(async (req, res) => {
     const {
         user: { _id, name },
-        body: { comment, rating, productID },
+        body: { comment, rating },
+        params: { id },
     } = req;
 
     const options = {
@@ -14,7 +15,7 @@ const addProductReview = CatchAsyncErrors(async (req, res) => {
         rating: rating,
     };
 
-    const reviews = await productService.addProductReview(options, productID);
+    const reviews = await productService.addProductReview(options, id);
 
     res.status(200).json({
         success: true,
@@ -23,7 +24,7 @@ const addProductReview = CatchAsyncErrors(async (req, res) => {
 });
 
 const getProductReviews = CatchAsyncErrors(async (req, res) => {
-    const { id } = req.query;
+    const { id } = req.params;
 
     const reviews = await productService.getProductReviews(id);
 

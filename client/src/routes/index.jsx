@@ -13,7 +13,6 @@ import OrderSuccess from "../components/cart/orderSuccess";
 import OrdersList from "../components/order/orderList";
 import OrderDetails from "../components/order/orderDetails";
 import ProductDetails from "../pages/productDetailsPage";
-import SubmitReviewModal from "../components/product/ProductReviewModal";
 
 const routes = [
   {

@@ -32,27 +32,27 @@ const productSchema = new mongoose.Schema({
     category: {
         type: "string",
         required: [true, "please enter your selected category "],
-        validate: {
-            validator:
-                (val) => {
-                    let values = [
-                        "electronics",
-                        "cameras",
-                        "laptops",
-                        "accessories",
-                        "headphones",
-                        "food",
-                        "books",
-                        "clothes/shoes",
-                        "beauty/health",
-                        "sports",
-                        "outdoor",
-                        "home",
-                    ];
-                    return (values.includes(val.toLowerCase()))
-                },
-            message: "please select  category of the existing ones"
-        }
+        // validate: {
+        //     validator:
+        //         (val) => {
+        //             let values = [
+        //                 "electronics",
+        //                 "cameras",
+        //                 "laptops",
+        //                 "accessories",
+        //                 "headphones",
+        //                 "food",
+        //                 "books",
+        //                 "clothes/shoes",
+        //                 "beauty/health",
+        //                 "sports",
+        //                 "outdoor",
+        //                 "home",
+        //             ];
+        //             return (values.includes(val.toLowerCase()))
+        //         },
+        //     message: "please select  category of the existing ones"
+        // }
     },
     seller: {
         type: 'string',
