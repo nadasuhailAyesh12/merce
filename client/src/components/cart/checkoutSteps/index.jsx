@@ -4,7 +4,8 @@ import "./style.css";
 import { useSelector } from "react-redux";
 
 const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
-  const user = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <div className="checkout-progress d-flex justify-content-center mt-4 mb-4">
       {shipping ? (

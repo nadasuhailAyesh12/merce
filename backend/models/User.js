@@ -24,12 +24,12 @@ const userSchema = new mongoose.Schema({
         public_id: {
             type: String,
             // required: true,
-            default: "0"
+            default: "hj_bpdo9l"
         },
         url: {
             type: String,
             // required: true,
-            default: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fuser%2F&psig=AOvVaw2ep09oj2rnom7WHNByvS4j&ust=1679728250887000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPjfi8CB9P0CFQAAAAAdAAAAABAE"
+            default: "https://res.cloudinary.com/dlet9uuef/image/upload/v1694387017/avatars/hj_bpdo9l.png"
 
         }
     },

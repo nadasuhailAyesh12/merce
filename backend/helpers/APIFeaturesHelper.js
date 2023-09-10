@@ -32,7 +32,7 @@ class APIFeatures {
             this.queryString.sorter == "price"
                 ? this.query.sort({ price: 1 })
                 : this.queryString.sorter == "ratings"
-                    ? this.query.sort({ ratings: -1 })
+                    ? this.query.sort({ rating: -1 })
                     : this.query;
         return this;
     }

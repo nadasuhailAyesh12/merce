@@ -35,7 +35,7 @@ const Shipping = () => {
     if (!isValidPhoneNumber(value)) {
       return "Invalid phoneNumber format";
     }
-    setValue("phoneNumber", phoneNumber);
+    setValue("phoneNumber",value);
     return true;
   };
 

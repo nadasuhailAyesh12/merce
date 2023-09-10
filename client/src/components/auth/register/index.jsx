@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import Navbar from "../../Common/Navbar";
 import "./style.css";
 import { createOrder } from "../../../actions/orderActions";
 
@@ -81,8 +80,7 @@ const Register = () => {
   });
   return (
     <>
-      <Navbar />
-      <div
+     <div
         className="d-flex justify-content-center align-items-center"
         style={{ marginTop: 30 }}
       >

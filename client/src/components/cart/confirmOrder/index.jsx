@@ -67,7 +67,7 @@ const ConfirmOrder = () => {
                 </div>
 
                 <div className="col-5 col-lg-6">
-                  <Link to={`/product/${item._id}`}>{item.name}</Link>
+                  <Link to={`/products/${item.product}`}>{item.name}</Link>
                 </div>
 
                 <div className="col-4 col-lg-4 mt-4 mt-lg-0">
