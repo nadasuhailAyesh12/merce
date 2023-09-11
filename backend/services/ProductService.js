@@ -26,6 +26,13 @@ const getProducts = async (requestQuery) => {
     return { products, productsCount };
 };
 
+const getAdminProducts = async () => {
+    return {
+        products: await productRepository.getProducts().displayProducts,
+        count: await productRepository.getProducts().count,
+    };
+};
+
 const getSingleProduct = async (id) => {
     const product = await productRepository.getSingleProduct(id);
     if (!product) {
@@ -104,6 +111,7 @@ const productService = {
     addProductReview,
     getProductReviews,
     deleteProductReview,
+    getAdminProducts,
 };
 
 module.exports = productService;

@@ -12,47 +12,47 @@ const createProduct = async (req, res) => {
         res.status(201).json({
             success: true,
             product,
-        })
-    }
-    catch (err) {
+        });
+    } catch (err) {
         if (!err instanceof ErrorHandler) {
-            return next(err)
+            return next(err);
         }
 
         if (err.name === "ValidationError") {
-            const message = Object.values(err.errors).map(value => value.message);
+            const message = Object.values(err.errors).map((value) => value.message);
             err = new ErrorHandler(message, 400);
         }
 
         res.status(err.statusCode || 500).json({
             success: false,
-            message: err.message
-        })
+            message: err.message,
+        });
     }
-}
+};
 
 const getProducts = async (req, res) => {
     try {
-        const { products, productsCount } = await productService.getProducts(req.query)
+        const { products, productsCount } = await productService.getProducts(
+            req.query
+        );
 
         res.status(200).json({
             success: true,
             count: products.length,
             products,
-            productsCount
+            productsCount,
         });
-    }
-    catch (err) {
+    } catch (err) {
         if (!err instanceof ErrorHandler) {
-            return next(err)
+            return next(err);
         }
 
         res.status(err.statusCode || 500).json({
             success: false,
-            message: err.message
-        })
-    };
-}
+            message: err.message,
+        });
+    }
+};
 
 const getSingleProduct = async (req, res, next) => {
     try {
@@ -61,16 +61,15 @@ const getSingleProduct = async (req, res, next) => {
             success: true,
             product,
         });
-    }
-    catch (err) {
+    } catch (err) {
         if (!err instanceof ErrorHandler) {
-            return next(err)
+            return next(err);
         }
 
         res.status(err.statusCode || 500).json({
             success: false,
-            message: err.message
-        })
+            message: err.message,
+        });
     }
 };
 
@@ -89,12 +88,22 @@ const deleteProduct = catchAsyncErrors(async (req, res) => {
     });
 });
 
+const getAdminProducts = catchAsyncErrors(async (req, res) => {
+    const { products, count } = await productService.getAdminProducts();
+    res.status(200).json({
+        success: true,
+        products,
+        count,
+    });
+});
+
 const productController = {
     createProduct,
     getProducts,
     getSingleProduct,
     updateProduct,
     deleteProduct,
+    getAdminProducts,
 };
 
 module.exports = productController;
