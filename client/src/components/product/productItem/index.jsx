@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
 const ProductItem = ({ product }) => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartItems, subTotal } = useSelector((state) => state.cart);
 
@@ -21,19 +21,19 @@ const ProductItem = ({ product }) => {
   };
 
   return (
-
-    <div
-      className="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1"
-      
-    >
-      <div className="card" >
-        <img className="card-img-top" src={product.images[0].url} onClick={()=>navigate(`/products/${product._id}`)}/>
+    <div className="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 d-flex justify-content-between">
+      <div className="card" style={{ border: "none" }}>
+        <img
+          className="card-img-top me-5"
+          src={product.images[0].url}
+          onClick={() => navigate(`/products/${product._id}`)}
+        />
         <div className="card-body">
           <h5>
-          
-                 <Link to={`/products/${product._id}`}>  <b>{product.name}</b></Link>
-            
-    
+            <Link to={`/products/${product._id}`}>
+              {" "}
+              <b>{product.name}</b>
+            </Link>
           </h5>
           <div className="d-flex flex-row my-2 ">
             <div className=" d-flex flex-column justify-content-lg-start mb-1000">
@@ -51,7 +51,6 @@ const ProductItem = ({ product }) => {
         </div>
       </div>
     </div>
-    
   );
 };
 

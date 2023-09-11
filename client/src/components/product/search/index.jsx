@@ -26,12 +26,12 @@ const Search = () => {
   };
  
   return (
-    <div>
-    <Form className="d-flex " >
+    <div style={{width:'60%'}}>
+    <Form  >
       <Form.Control
           type="search"
           placeholder="Search product"
-          className="nav-item rounded bg-light search-nav-item me-2 "
+          className="nav-item rounded bg-light search-nav-item"
           value={searchQuery}
           onChange={handleSearch}
           onBlur={() => {

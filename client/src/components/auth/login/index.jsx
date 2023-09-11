@@ -30,7 +30,7 @@ const Login = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const intendedDestination = sessionStorage.getItem("intendedDestination");
-      sessionStorage.removeItem("intendedDestination");
+
       const successMessage = await dispatch(login(data.email, data.password));
       const guestOrderInfo = JSON.parse(
         sessionStorage.getItem("guestOrderInfo")
@@ -45,7 +45,7 @@ const Login = () => {
             shippingCost: guestOrderInfo.shippingCost,
             shippingInfo: guestOrderInfo.shippingInfo,
             paymentInfo: guestOrderInfo.paymentInfo,
-            orderItems:guestOrderInfo.orderItems
+            orderItems: guestOrderInfo.orderItems,
           })
         );
         sessionStorage.removeItem("guestOrderInfo");
