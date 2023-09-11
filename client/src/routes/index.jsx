@@ -13,6 +13,9 @@ import OrderSuccess from "../components/cart/orderSuccess";
 import OrdersList from "../components/order/orderList";
 import OrderDetails from "../components/order/orderDetails";
 import ProductDetails from "../pages/productDetailsPage";
+import Sidebar from "../components/admin/adminsideBar";
+import AdminDashboard from "../components/admin/dashboard";
+
 
 const routes = [
   {
@@ -99,6 +102,14 @@ const routes = [
   {
     path: "/products/:id",
     element: <ProductDetails />,
+  },
+  {
+
+    path: "/nada",
+    element:
+           <ProtectedRoute  allowedRules={["Admin"]}>
+        <AdminDashboard />
+        </ProtectedRoute>
   },
  
 ];
