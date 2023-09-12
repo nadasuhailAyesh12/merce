@@ -9,6 +9,7 @@ const initialState = {
     loading: false,
     error: null,
     adminProducts: [],
+    productsCount: 0
 };
 
 const productListReducer = (state = initialState, action) => {
@@ -61,7 +62,8 @@ const productListReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                adminProducts: action.payload,
+                adminProducts: action.payload.products,
+                productsCount: action.payload.productsCount
             };
 
         default:

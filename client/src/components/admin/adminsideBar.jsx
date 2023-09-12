@@ -36,7 +36,7 @@ const Sidebar = () => {
           <NavDropdown.Divider />
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="/dashboard" activeClassName="activeClicked">
+              <NavLink  to="/dashboard">
                 <CDBSidebarMenuItem icon="columns">
                   Dashboard
                 </CDBSidebarMenuItem>
@@ -60,21 +60,20 @@ const Sidebar = () => {
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <NavLink exact to="/profile" activeClassName="activeClicked">
+              <NavLink  to="/profile">
                 <CDBSidebarMenuItem icon="user">users</CDBSidebarMenuItem>
               </NavLink>
 
-              <NavLink exact to="/analytics" activeClassName="activeClicked">
+              <NavLink  to="/analytics" >
                 <CDBSidebarMenuItem icon="shopping-cart">
                   orders
                 </CDBSidebarMenuItem>
               </NavLink>
 
               <NavLink
-                exact
+              
                 to="/hero404"
                 target="_blank"
-                activeClassName="activeClicked"
               >
                 <CDBSidebarMenuItem icon="star">reviews</CDBSidebarMenuItem>
               </NavLink>

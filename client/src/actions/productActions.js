@@ -71,7 +71,10 @@ export const getAdminProducts = () => async (dispatch) => {
         const response = await axios.get("/product/admin");
         dispatch({
             type: "ADMIN_PRODUCTS_SUCCESS",
-            payload: response.data.products,
+            payload: {
+                products: response.data.products,
+                productsCount: response.data.count
+            },
         });
     } catch (error) {
         dispatch({ type: "PRODUCT_API_FAILURE" });

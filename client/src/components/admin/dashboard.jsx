@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./adminsideBar";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { getAdminProducts } from "../../actions/productActions";
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch();
+  const { productsCount } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    async () => {
+      try {
+        await dispatch(getAdminProducts());
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+  }, [dispatch]);
+
   return (
     <>
       <div className="row">
@@ -25,7 +41,7 @@ const AdminDashboard = () => {
                   <div className="card-body">
                     <div className="text-center fs-2">
                       Products
-                      <br /> <b className="fs-3">{10}</b>
+                      <br /> <b className="fs-3">{productsCount}</b>
                     </div>
                   </div>
                   <Link
