@@ -81,3 +81,19 @@ export const getAdminProducts = () => async (dispatch) => {
         throw error;
     }
 };
+
+export const createProduct = (productData) => async (dispatch) => {
+    try {
+        await dispatch({ type: "PRODUCT_API_REQUEST" });
+        const response = await axios.post("/product/admin", productData);
+        dispatch({
+            type: "CREATE_PRODUCT_SUCCESS",
+            payload: response.data.product
+        });
+    } catch (error) {
+        dispatch({ type: "PRODUCT_API_FAILURE" });
+        throw error;
+    }
+};
+
+

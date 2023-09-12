@@ -3,19 +3,19 @@ const AuthMiddlewares = require("../middlewars/AuthMiddleware");
 const productRouter = require("express").Router();
 
 productRouter.post(
-    "/",
+    "/admin",
     AuthMiddlewares.isAuthenticatedUser,
     AuthMiddlewares.authorizeRole("Admin"),
     productController.createProduct
 );
 productRouter.get(
-    "/admin/",
+    "/admin",
     AuthMiddlewares.isAuthenticatedUser,
     AuthMiddlewares.authorizeRole("Admin"),
     productController.getAdminProducts
 );
-productRouter.get("/", productController.getProducts);
 productRouter.get("/:id", productController.getSingleProduct);
+productRouter.get("/", productController.getProducts);
 productRouter.put(
     "/:id",
     AuthMiddlewares.isAuthenticatedUser,

@@ -16,6 +16,7 @@ import ProductDetails from "../pages/productDetailsPage";
 import Sidebar from "../components/admin/adminsideBar";
 import AdminDashboard from "../components/admin/dashboard";
 import ProductList from "../components/admin/productList";
+import NewProduct from "../components/admin/newProduct";
 
 
 const routes = [
@@ -118,6 +119,14 @@ const routes = [
     element:
            <ProtectedRoute  allowedRules={["Admin"]}>
         <ProductList />
+        </ProtectedRoute>
+  },
+   {
+
+    path: "/hazem",
+    element:
+           <ProtectedRoute  allowedRules={["Admin"]}>
+        <NewProduct />
         </ProtectedRoute>
   },
  

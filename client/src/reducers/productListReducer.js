@@ -9,7 +9,8 @@ const initialState = {
     loading: false,
     error: null,
     adminProducts: [],
-    productsCount: 0
+    productsCount: 0,
+    newProduct: {}
 };
 
 const productListReducer = (state = initialState, action) => {
@@ -65,6 +66,14 @@ const productListReducer = (state = initialState, action) => {
                 adminProducts: action.payload.products,
                 productsCount: action.payload.productsCount
             };
+        case 'CREATE_PRODUCT_SUCCESS': {
+            console.log('nada', action.payload)
+            return {
+                ...state,
+                loading: false,
+                newProduct: action.payload
+            }
+        }
 
         default:
             return state;

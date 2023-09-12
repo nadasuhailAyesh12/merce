@@ -25,7 +25,7 @@ const ProductItem = ({ product }) => {
       <div className="card" style={{ border: "none" }}>
         <img
           className="card-img-top me-5"
-          src={product.images[0].url}
+          src={product.images[0]?.url}
           onClick={() => navigate(`/products/${product._id}`)}
         />
         <div className="card-body">

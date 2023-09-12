@@ -4,8 +4,9 @@ const ErrorHandler = require("../helpers/ErrorHandlerHelper");
 
 const createProduct = async (req, res) => {
     try {
-        const image = await productService.uploadPhoto(req.files);
-        req.body.image = image;
+
+        // const image = await upload(req.body.image, 'products');
+        // req.body.image = image;
         req.body.user = req.user._id;
         const product = await productService.createProduct(req.body);
 
