@@ -51,7 +51,7 @@ const Sidebar = () => {
                 }
                 style={{ marginLeft: 35 }}
               >
-                <NavDropdown.Item href="/me" className="text-muted">
+                <NavDropdown.Item href="/admin/products" className="text-muted">
                   All
                 </NavDropdown.Item>
 

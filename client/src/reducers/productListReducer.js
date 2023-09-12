@@ -8,6 +8,7 @@ const initialState = {
     currentPage: 1,
     loading: false,
     error: null,
+    adminProducts: [],
 };
 
 const productListReducer = (state = initialState, action) => {
@@ -54,6 +55,13 @@ const productListReducer = (state = initialState, action) => {
                 ...state,
                 loading: true,
                 error: null,
+            };
+
+        case "ADMIN_PRODUCTS_SUCCESS":
+            return {
+                ...state,
+                loading: false,
+                adminProducts: action.payload,
             };
 
         default:
