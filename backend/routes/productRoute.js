@@ -23,7 +23,7 @@ productRouter.put(
     productController.updateProduct
 );
 productRouter.delete(
-    "/:id",
+    "/admin/:id",
     AuthMiddlewares.isAuthenticatedUser,
     AuthMiddlewares.authorizeRole("Admin"),
     productController.deleteProduct

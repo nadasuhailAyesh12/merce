@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MDBDataTable as ProductsTable } from "mdbreact";
@@ -6,9 +6,13 @@ import Loader from "../Common/loader";
 import { Link } from "react-router-dom";
 import { HiPencilAlt } from "react-icons/hi";
 import { FaTrashAlt } from "react-icons/fa";
-import { getAdminProducts } from "../../actions/productActions";
+import { deleteProduct, getAdminProducts } from "../../actions/productActions";
+import DeleteAlert from "../Common/deleteAlert";
+import { toast } from "react-toastify";
 
 const ProductList = () => {
+  const [deleteAlertVisible, setDeleteAlertVisible] = useState(false);
+
   const { adminProducts: products, loading } = useSelector(
     (state) => state.products
   );
@@ -23,6 +27,16 @@ const ProductList = () => {
       }
     })();
   }, [dispatch]);
+
+  const handleDeleteProduct = async (productID) => {
+    try {
+      console.log();
+      await dispatch(deleteProduct(productID));
+      toast.success("nada");
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   const displayProducts = () => {
     const data = {
@@ -65,9 +79,17 @@ const ProductList = () => {
             <Link to={`#`} className="btn btn-primary me-2">
               <HiPencilAlt />
             </Link>
-            <Link to={`#`} className="btn btn-danger">
+            <button
+              className="btn btn-danger"
+              onClick={() => setDeleteAlertVisible(true)}
+            >
               <FaTrashAlt />
-            </Link>
+            </button>
+            <DeleteAlert
+              onConfirm={() => handleDeleteProduct(product._id)}
+              onClose={() => setDeleteAlertVisible(false)}
+              isVisible={deleteAlertVisible}
+            />
           </>
         ),
       });

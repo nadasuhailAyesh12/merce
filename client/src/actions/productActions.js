@@ -54,6 +54,7 @@ export const getProductDetails = (productID) => async (dispatch) => {
     try {
         dispatch({ type: "getProductDetails_REQUEST" });
         const response = await axios.get(`/product/${productID}`);
+        console.log(response);
         dispatch({
             type: "getProductDetails_SUCCESS",
             payload: response.data.product,
@@ -95,9 +96,22 @@ export const createProduct = (productData) => async (dispatch) => {
             payload: response.data.product,
         });
         return response.data.message || "operation success";
-    }
-    catch (error) {
+    } catch (error) {
         dispatch({ type: "PRODUCT_API_FAILURE" });
-        throw error;//throw it to caller to handle it
+        throw error; //throw it to caller to handle it
+    }
+};
+
+export const deleteProduct = (productID) => async (dispatch) => {
+    try {
+        const response = await axios.delete(`/product/admin/${productID}`);
+        dispatch({
+            type: "DELETE_PRODUCT_SUCCESS",
+        });
+
+        return response.data.message || "operation success";
+    } catch (error) {
+        dispatch({ type: "PRODUCT_API_FAILURE" });
+        throw error; //throw it to caller to handle it
     }
 };

@@ -49,8 +49,7 @@ const updateProduct = async (id, options) => {
 
 const deleteProduct = async (id) => {
     const product = await getSingleProduct(id);
-    const image_id = product.image.public_id;
-    destroyPhotoHelper(image_id);
+    product?.images?.forEach(image => destroyPhotoHelper(image?.public_id))
     await productRepository.deleteProduct(id);
 };
 
