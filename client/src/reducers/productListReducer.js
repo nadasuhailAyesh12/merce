@@ -10,7 +10,7 @@ const initialState = {
     error: null,
     adminProducts: [],
     productsCount: 0,
-    newProduct: {}
+    newProduct: {},
 };
 
 const productListReducer = (state = initialState, action) => {
@@ -64,17 +64,21 @@ const productListReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 adminProducts: action.payload.products,
-                productsCount: action.payload.productsCount
+                productsCount: action.payload.productsCount,
             };
-        case 'CREATE_PRODUCT_SUCCESS': {
-            console.log('nada', action.payload)
+        case "CREATE_PRODUCT_SUCCESS": {
             return {
                 ...state,
                 loading: false,
-                newProduct: action.payload
-            }
+                newProduct: action.payload,
+            };
         }
-
+        case "DELETE_PRODUCT_SUCCESS": {
+            return {
+                ...state,
+                loading: false,
+            };
+        }
         default:
             return state;
     }

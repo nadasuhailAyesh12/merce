@@ -47,27 +47,27 @@ const ProductDetails = () => {
           <div className="row d-flex justify-content-around ">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
               <Carousel pause="hover">
-                {product.images &&
+                {product?.images &&
                   product.images.map((image) => (
-                    <Carousel.Item key={image.public_id}>
-                      <img className="d-block w-100 mb-100" src={image.url} />
+                    <Carousel.Item key={image?.public_id}>
+                      <img className="d-block w-100 mb-100" src={image?.url} />
                     </Carousel.Item>
                   ))}
               </Carousel>
             </div>
 
             <div className="col-12 col-lg-5 mt-5">
-              <h2>{product.name}</h2>
-              <p className="text-muted">Product # {product._id}</p>
+              <h2>{product?.name}</h2>
+              <p className="text-muted">Product # {product?._id}</p>
 
               <hr />
               <div className="d-flex">
-                <StarRating rating={product.rating} />
-                <span className="">({product.numOfReviews} Reviews)</span>
+                <StarRating rating={product?.rating} />
+                <span className="">({product?.numOfReviews} Reviews)</span>
               </div>
               <hr />
               <div className="d-flex align-items-center">
-                <b className="fs-2 me-3 ">${product.price}</b>
+                <b className="fs-2 me-3 ">${product?.price}</b>
 
                 <button
                   type="button"
@@ -81,10 +81,10 @@ const ProductDetails = () => {
               <hr />
 
               <h2 className="mt-2">Description:</h2>
-              <p className="fs-5">{product.description}</p>
+              <p className="fs-5">{product?.description}</p>
               <hr />
               <p className=" fs-5 mb-1">
-                Sold by: <strong>{product.seller}</strong>
+                Sold by: <strong>{product?.seller}</strong>
               </p>
               <button
                 type="button"
@@ -103,7 +103,7 @@ const ProductDetails = () => {
           </div>
           <hr />
 
-          <ReviewsList reviews={product.reviews} />
+          <ReviewsList reviews={product?.reviews} />
         </>
       )}
     </>
