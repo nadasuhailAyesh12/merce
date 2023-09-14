@@ -1,35 +1,25 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
 import { deleteFromCart, updateQuantity } from "../../../actions/cartActions";
 import "./style.css";
 import { toast } from "react-toastify";
+import DeleteAlert from "../../Common/deleteAlert";
 
 const CartItem = ({ item }) => {
   const [stockHintVisible, setStockHintVisible] = useState(false);
+  const [deleteAlertVisible,setDeleteAlertVisible]=useState(false)
   const { cartItems, subTotal } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        try {
+      try {
           dispatch(deleteFromCart(item, cartItems, subTotal));
           toast.success("item deleted sucessfuly");
         } catch (error) {
           toast.error(error);
         }
       }
-    });
-  };
+  
   const handleUpdateQuantity = (e) => {
     if (item.stock <= 10 || item.stock === 0) {
       setStockHintVisible(true);
@@ -71,7 +61,7 @@ const CartItem = ({ item }) => {
                   type="number"
                   min="1"
                   max={item.stock}
-                  value={item.quantity}
+                  value={item.quantity||1}
                   className="form-control quantity-input"
                   onChange={handleUpdateQuantity}
                   onClick={handleUpdateQuantity}
@@ -91,8 +81,10 @@ const CartItem = ({ item }) => {
                 <span>{item.price}</span>
                 <span
                   className="fa-sharp fa-solid fa-trash"
-                  onClick={handleDelete}
+                  onClick={()=>setDeleteAlertVisible(true)}
                 ></span>
+                <DeleteAlert onClose={() => setDeleteAlertVisible(false)} isVisible={deleteAlertVisible}
+                  onConfirm={handleDelete}/>
               </div>
             </div>
           </div>
