@@ -73,7 +73,7 @@ export const getAdminProducts = () => async (dispatch) => {
             type: "ADMIN_PRODUCTS_SUCCESS",
             payload: {
                 products: response.data.products,
-                productsCount: response.data.count
+                productsCount: response.data.count,
             },
         });
     } catch (error) {
@@ -85,15 +85,19 @@ export const getAdminProducts = () => async (dispatch) => {
 export const createProduct = (productData) => async (dispatch) => {
     try {
         await dispatch({ type: "PRODUCT_API_REQUEST" });
-        const response = await axios.post("/product/admin", productData);
+        const response = await axios.post("/product/admin", productData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
         dispatch({
             type: "CREATE_PRODUCT_SUCCESS",
-            payload: response.data.product
+            payload: response.data.product,
         });
-    } catch (error) {
+        return response.data.message || "operation success";
+    }
+    catch (error) {
         dispatch({ type: "PRODUCT_API_FAILURE" });
-        throw error;
+        throw error;//throw it to caller to handle it
     }
 };
-
-

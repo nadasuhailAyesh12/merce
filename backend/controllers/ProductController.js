@@ -1,13 +1,25 @@
 const productService = require("../services/ProductService");
 const catchAsyncErrors = require("../middlewars/CatchAsyncErrorsMiddleware");
 const ErrorHandler = require("../helpers/ErrorHandlerHelper");
+const uploadPhoto = require("../services/UploadPhotoService");
 
 const createProduct = async (req, res) => {
     try {
+        let { images } = req.body;
+        if (images) {
+            if (!Array.isArray(images)) {
+                images = [].concat(images);
+            }
 
-        // const image = await upload(req.body.image, 'products');
-        // req.body.image = image;
+            const uploadedImagesPromises = images?.map(
+                async (image) => await uploadPhoto(image, "products")
+            );
+            const uploadedImages = await Promise.all(uploadedImagesPromises);
+            console.log(uploadedImages);
+            req.body.images = uploadedImages;
+        }
         req.body.user = req.user._id;
+
         const product = await productService.createProduct(req.body);
 
         res.status(201).json({
@@ -15,7 +27,7 @@ const createProduct = async (req, res) => {
             product,
         });
     } catch (err) {
-        if (!err instanceof ErrorHandler) {
+        if (!(err instanceof ErrorHandler)) {
             return next(err);
         }
 
@@ -43,8 +55,9 @@ const getProducts = async (req, res) => {
             products,
             productsCount,
         });
-    } catch (err) {
-        if (!err instanceof ErrorHandler) {
+    }
+    catch (err) {
+        if (!(err instanceof ErrorHandler)) {
             return next(err);
         }
 
