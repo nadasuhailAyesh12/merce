@@ -25,7 +25,10 @@ const login = async (userData) => {
     const user = await UserRepository.getUser({ email });
     const loginUser = await UserRepository.getUser({ email }).select("+password");
 
-    if (
+    if (!user) {
+        throw new ErrorHandler(`user doesnt exists,please create an account`, 401);
+    }
+    else if (
         user &&
         (await AuthHelper.comparePassword(password, loginUser.password))
     ) {
